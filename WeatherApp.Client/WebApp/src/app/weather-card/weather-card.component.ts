@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Input, Component, OnInit } from '@angular/core';
+import { WeatherImageService } from '../weather-image.service';
+import { WeatherCard } from './weathercard';
 
 @Component({
   selector: 'app-weather-card',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WeatherCardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private weatherImageService: WeatherImageService) {
+    this.model = new WeatherCard("NAN", 0, "sn", false);
+  }
 
   ngOnInit(): void {
   }
 
+  getWeatherImage(): string {
+    return this.weatherImageService.getWeatherImageUrl(this.model.iconShortHand);
+  }
+
+  @Input() model: WeatherCard
 }

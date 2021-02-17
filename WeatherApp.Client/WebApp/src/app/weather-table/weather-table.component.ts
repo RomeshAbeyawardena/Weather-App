@@ -14,5 +14,6 @@ export class WeatherTableComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  @Input() weatherCards : Array<WeatherCard>;
+
+  @Input() weatherCards: Array<WeatherCard>;
 }
