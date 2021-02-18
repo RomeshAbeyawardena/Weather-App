@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using AutoMapper;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,14 @@ namespace WeatherApp.Server.Base
     public class ProviderBase
     {
         public ProviderBase(
+            IMapper mapper,
             IRestClient restClient)
         {
+            Mapper = mapper;
             RestClient = restClient;
         }
 
-        public IRestClient RestClient { get; }
+        protected IMapper Mapper { get; }
+        protected IRestClient RestClient { get; }
     }
 }

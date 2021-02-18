@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using AutoMapper;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using WeatherApp.Server.Base;
 using WeatherApp.Shared.Constants;
 using WeatherApp.Shared.Contracts.Providers;
+using WeatherApp.Shared.Models;
 using Models = WeatherApp.Shared.Models;
 
 namespace WeatherApp.Server.Features.Weather
@@ -25,17 +27,22 @@ namespace WeatherApp.Server.Features.Weather
             }
 
             var request = new RestRequest(
-                $"{ApiClientContants.GetWeatherForecastEndpoint}/{location.Id}");
+                $"{ApiClientContants.GetWeatherForecastEndpoint}{location.Id}");
 
-            return await RestClient
-                .GetAsync<List<Models.WeatherForecast>>(
+            var result = await RestClient
+                .GetAsync<SourceWeather>(
                 request,
                 cancellationToken);
+
+            return Mapper
+                .Map<IEnumerable<WeatherForecast>>(result.Consolidated_Weather);
         }
 
         public WeatherProvider(
+            IMapper mapper,
             IRestClient restClient)
-            : base(restClient)
+            : base(mapper,
+                   restClient)
         {
 
         }

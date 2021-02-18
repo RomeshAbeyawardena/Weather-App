@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WeatherApp.Shared.Constants
 {
-    public class ServiceConstants
+    public static class ServiceConstants
     {
         public static IEnumerable<string> ServerServiceTypes = new [] { "Provider", "Factory" };
     }

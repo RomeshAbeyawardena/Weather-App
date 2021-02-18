@@ -14,7 +14,7 @@ namespace WeatherApp.Server.Features.Weather
     {
         [HttpGet]
         public Task<IActionResult> GetWeatherForecast(
-            GetWeatherForecastRequest request,
+            [FromQuery]GetWeatherForecastRequest request,
             CancellationToken cancellationToken)
         {
             return SendAsync(

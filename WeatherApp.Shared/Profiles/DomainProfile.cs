@@ -14,7 +14,8 @@ namespace WeatherApp.Shared.Profiles
         public DomainProfile()
         {
             CreateMap<SourceLocation, Location>()
-                .ForMember(member => member.Name, opt => opt.MapFrom(member => member.Title))
+                .ForMember(member => member.Name, 
+                    opt => opt.MapFrom(member => member.Title))
                 .ForMember(member => member.Id, 
                     opt => opt.MapFrom(member => member.WoeId))
                 .ForMember(member => member.GeoLocation, 
@@ -22,6 +23,16 @@ namespace WeatherApp.Shared.Profiles
                         new GeoLocationValueConvertor(), 
                         nameof(SourceLocation.Latt_Long)))
                 .ForMember(member => member.Type, opt => opt.MapFrom(member => member.LocationType));
+
+            CreateMap<SourceForecast, WeatherForecast>()
+                .ForMember(member => member.Date, 
+                    opt => opt.MapFrom(member => member.Applicable_date))
+                .ForMember(member => member.State, 
+                    opt => opt.MapFrom(member => member.Weather_state_name))
+                .ForMember(member => member.StateAbbreviation, 
+                    opt => opt.MapFrom(member => member.Weather_state_abbr))
+                .ForMember(member => member.Temperature, 
+                    opt => opt.MapFrom(member => member.The_temp));
         }
 
     }

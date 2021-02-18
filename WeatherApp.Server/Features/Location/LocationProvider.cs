@@ -68,7 +68,7 @@ namespace WeatherApp.Server.Features.Location
                     request, 
                     cancellationToken);
 
-            return mapper
+            return Mapper
                 .Map<IEnumerable<Models.Location>>(locations);
 
         }
@@ -76,11 +76,9 @@ namespace WeatherApp.Server.Features.Location
         public LocationProvider(
             IRestClient restClient,
             IMapper mapper)
-            : base(restClient)
+            : base(mapper,
+                   restClient)
         {
-            this.mapper = mapper;
         }
-
-        private readonly IMapper mapper;
     }
 }
