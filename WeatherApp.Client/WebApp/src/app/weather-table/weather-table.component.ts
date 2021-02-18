@@ -17,13 +17,7 @@ export class WeatherTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.weatherDataService
-      .getWeatherData(
-        this.region,
-        this.fromDate,
-        this.toDate)
-      .then(
-        (result: Array<WeatherCard>) => this.weatherCards =  result);
+    
   }
 
   weatherCards: Array<WeatherCard>;

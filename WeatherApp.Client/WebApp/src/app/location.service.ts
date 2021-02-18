@@ -15,11 +15,8 @@ export class LocationService {
     
     const params = new HttpParams({ fromObject: { query } });
 
-    var response = this.httpService
-        .get(this.getLocationUrl,
-          { params });
+    return new Promise<LocationResponse>(resolve => resolve(new LocationResponse(1, "")));
 
-    response.
   }
 
   getLocationUrl: string;
