@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WeatherApp.Shared;
+using WeatherApp.Shared.Models;
 
 namespace WeatherApp.Client
 {
@@ -14,8 +15,13 @@ namespace WeatherApp.Client
             IServiceCollection services)
         { 
             services 
-                .AddSingleton<ApplicationSettings>()
+                .AddSingleton<ApplicationSettings>();
+
+            services
                 .AddControllersWithViews();
+
+            services
+                .AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -30,8 +36,14 @@ namespace WeatherApp.Client
             app.UseStaticFiles();
             app.UseRouting();
             app.UseCors();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
+                endpoints
+                    .MapControllerRoute(name: "Identity",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapRazorPages();
                 endpoints
                     .MapDefaultControllerRoute();
             });

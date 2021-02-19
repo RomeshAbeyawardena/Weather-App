@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WeatherApp.Client.ViewModels.Home;
 using WeatherApp.Shared;
 
@@ -6,7 +7,7 @@ namespace WeatherApp.Client.Controllers
 {
     public class HomeController : Controller
     {
-        [HttpGet] 
+        [HttpGet, Authorize] 
         public IActionResult Index(string query)
         {
             if (string.IsNullOrWhiteSpace(query))

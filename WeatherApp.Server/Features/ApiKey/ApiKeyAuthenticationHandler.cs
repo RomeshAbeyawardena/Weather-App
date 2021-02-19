@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using WeatherApp.Shared;
 using WeatherApp.Shared.Constants;
 
-namespace WeatherApp.Server.Features.ApiKey
+namespace WeatherApp.Server.Features.ApiKey 
 {
     public class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthenticationOptions>
     {

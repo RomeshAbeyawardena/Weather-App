@@ -1,3 +1,4 @@
+using AutoMapper;
 using Moq;
 using NUnit.Framework;
 using RestSharp;
@@ -13,8 +14,10 @@ namespace WeatherApp.UnitTests
         public void Setup()
         {
             restClientMock = new Mock<IRestClient>();
+            mapperMock = new Mock<IMapper>();
             sut = new LocationProvider(
-                restClientMock.Object);
+                restClientMock.Object,
+                mapperMock.Object);
         }
 
         [Test]
@@ -85,5 +88,6 @@ namespace WeatherApp.UnitTests
 
         private LocationProvider sut;
         private Mock<IRestClient> restClientMock;
+        private Mock<IMapper> mapperMock;
     }
 }
