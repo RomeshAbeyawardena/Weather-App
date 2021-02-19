@@ -18,14 +18,31 @@ export class WeatherCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.model.dayOfWeek = moment(this.weather.date).format("dddd");
+    const currentDate = moment();
+    const forecastDate = moment(this.weather.date);
+    this.model.isCurrentDayOfWeek = forecastDate.isSame(currentDate, "day"); 
+    this.model.dayOfWeek = forecastDate.format("dddd");
     this.model.iconShortHand = this.weather.stateAbbreviation;
-    this.model.temperature = this.weather.temperature;
+    this.model.temperature = Math.round(this.weather.temperature);
   }
 
   getWeatherImage(): string {
     return this.weatherImageService
       .getWeatherImageUrl(this.model.iconShortHand);
+  }
+
+  displayIf(
+    expression: Boolean,
+    displayIfTrue: string,
+    displayIfFalse?: string): string {
+    if(expression)
+      return displayIfTrue;
+
+    if(displayIfFalse === null
+       || displayIfFalse === undefined)
+      return "";
+
+    return displayIfFalse;
   }
 
   @Input() weather: WeatherData;

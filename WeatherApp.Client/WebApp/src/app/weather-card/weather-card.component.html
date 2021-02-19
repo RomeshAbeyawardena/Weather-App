@@ -1,5 +1,5 @@
 <div class="card weather-card">
-  <div class="card-header">
+  <div [ngClass]="model.isCurrentDayOfWeek ? 'card-header bg-primary text-light text-center' : 'card-header text-center'">
     {{ model.dayOfWeek }}
   </div>
   <img [src]="getWeatherImage()" class="card-img-top" alt="...">

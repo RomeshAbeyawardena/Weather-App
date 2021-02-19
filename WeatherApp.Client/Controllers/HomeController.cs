@@ -7,10 +7,16 @@ namespace WeatherApp.Client.Controllers
     public class HomeController : Controller
     {
         [HttpGet] 
-        public IActionResult Index()
+        public IActionResult Index(string query)
         {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                query = "Belfast";
+            }
+
             return View(
                 new IndexViewModel { 
+                    Query = query,
                     ApiBaseUrl = applicationSettings
                         .DataProviderBaseUrl
                 });

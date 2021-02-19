@@ -33,7 +33,8 @@ export class AppComponent {
       this.baseApiUrl,
       this.query);
 
-    this.searchLocations = result.pipe(map((locationResponse: LocationResponse) => locationResponse.locations));
+    this.searchLocations = result
+      .pipe(map((locationResponse: LocationResponse) => locationResponse.locations));
   }
   searchLocations: Observable<Array<LocationItem>> 
   baseApiUrl: string;

@@ -24,10 +24,10 @@ export class WeatherTableComponent implements OnInit {
     }
 
     this.baseApiUrl = baseUrl;
+    this.isLoading = true;
   }
 
   ngOnInit(): void {
-    console.log(this.locations, "WeatherTableComponent.ngOnInit");
     const context = this;
 
     this.locations
@@ -45,16 +45,18 @@ export class WeatherTableComponent implements OnInit {
       new Date(),
       new Date());
 
-    console.log(result);
     const context = this;
 
     result
       .subscribe({
         next(weatherResponse: WeatherResponse) {
-          context.weatherData = weatherResponse.weatherForecast; } });
+          context.weatherData = weatherResponse.weatherForecast;
+          context.isLoading = false;
+        } });
   }
 
   baseApiUrl: string;
+  isLoading: boolean;
   weatherData: Array<WeatherData>;
   @Input() locations: Observable<Array<LocationItem>>
 }
