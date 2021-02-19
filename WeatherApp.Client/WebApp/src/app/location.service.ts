@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { LocationResponse } from './location-response';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ConfigurationService } from './configuration.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class LocationService {
 
   getLocation(
     baseUrl: string,
-    query: string): Promise<LocationResponse> {
+    query: string): Observable<LocationResponse> {
     
     const params = new HttpParams({ fromObject: { query } });
 
@@ -28,7 +29,7 @@ export class LocationService {
       .get<LocationResponse>(baseUrl + this.getLocationUrl,
         { headers, params } );
 
-    return response.toPromise();
+    return response;
   }
 
   private getLocationUrl = "location";

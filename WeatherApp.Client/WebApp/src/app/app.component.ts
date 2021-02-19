@@ -1,5 +1,8 @@
-import { Input, Component, ElementRef } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 import { LocationItem } from './location-item';
+import { LocationResponse } from './location-response';
 import { LocationService } from './location.service';
 
 @Component({
@@ -17,16 +20,22 @@ export class AppComponent {
 
     this.baseApiUrl = nativeElement.getAttribute('baseapiurl');
     this.query = nativeElement.getAttribute('query');
-    this.searchLocations = new Array(0);
 
+    this.searchLocations = new Observable<Array<LocationItem>>();
+
+    sessionStorage.setItem(
+      "baseApiUrl",
+      this.baseApiUrl);
+  }
+
+  ngOnInit() {
     const result = this.locationService.getLocation(
       this.baseApiUrl,
       this.query);
 
-    result.then(a => { this.searchLocations = a.locations });
+    this.searchLocations = result.pipe(map((locationResponse: LocationResponse) => locationResponse.locations));
   }
- 
-  searchLocations: Array<LocationItem> 
+  searchLocations: Observable<Array<LocationItem>> 
   baseApiUrl: string;
   query: string;
 }

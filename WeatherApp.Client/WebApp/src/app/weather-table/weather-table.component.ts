@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { WeatherCard } from '../weather-card/weathercard';
+import { Observable } from 'rxjs';
+import { LocationItem } from '../location-item';
+import { WeatherData } from '../weather-data';
 import { WeatherDataService } from '../weather-data.service';
+import { WeatherResponse } from '../weather-response';
 
 @Component({
   selector: 'app-weather-table',
@@ -10,14 +13,48 @@ import { WeatherDataService } from '../weather-data.service';
 export class WeatherTableComponent implements OnInit {
 
   constructor(private weatherDataService: WeatherDataService) {
-    this.weatherCards = new Array(5);
-    this.region = "NAN";
+    this.weatherData = new Array<WeatherData>();
+    this.locations = new Observable<Array<LocationItem>>();
+
+    const baseUrl = sessionStorage
+      .getItem("baseApiUrl");
+
+    if (baseUrl === null) {
+      throw "baseUrl not available"
+    }
+
+    this.baseApiUrl = baseUrl;
   }
 
   ngOnInit(): void {
-    
+    console.log(this.locations, "WeatherTableComponent.ngOnInit");
+    const context = this;
+
+    this.locations
+      .subscribe({
+        next(locations: Array<LocationItem>) {
+          context
+            .getWeatherData(locations) }
+      }); 
   }
 
-  weatherCards: Array<WeatherCard>;
-  @Input() region: string;
+  getWeatherData(locations: Array<LocationItem>) {
+    const result = this.weatherDataService.getWeatherData(
+      this.baseApiUrl,
+      locations[0],
+      new Date(),
+      new Date());
+
+    console.log(result);
+    const context = this;
+
+    result
+      .subscribe({
+        next(weatherResponse: WeatherResponse) {
+          context.weatherData = weatherResponse.weatherForecast; } });
+  }
+
+  baseApiUrl: string;
+  weatherData: Array<WeatherData>;
+  @Input() locations: Observable<Array<LocationItem>>
 }

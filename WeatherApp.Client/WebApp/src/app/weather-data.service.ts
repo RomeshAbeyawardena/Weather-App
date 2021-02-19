@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { WeatherData } from './weather-data';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ConfigurationService } from './configuration.service';
 import { WeatherResponse } from './weather-response';
+import { LocationItem } from './location-item';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,25 +15,26 @@ export class WeatherDataService {
 
   getWeatherData(
     baseUrl: string,
-    region: string,
+    locationItem: LocationItem,
     fromDate: Date,
-    toDate: Date): Promise<WeatherResponse> {
+    toDate: Date): Observable<WeatherResponse> {
     const fromDateParameter = fromDate.toISOString();
     const toDateParameter = toDate.toISOString();
+    const id = locationItem.id.toString();
 
     const headers = this
       .configurationService
       .getHttpHeaders();
 
     const params = new HttpParams({ fromObject:
-      { region, fromDateParameter, toDateParameter } });
+      { id, fromDateParameter, toDateParameter } });
 
     const response = this.httpClient.get<WeatherResponse>(
       baseUrl + this.getWeatherForecast,
       { headers, params } );
 
-    return response.toPromise();
+    return response;
   }
 
-  private getWeatherForecast = "";
+  private getWeatherForecast = "weather";
 }
