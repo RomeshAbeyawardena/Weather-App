@@ -10,10 +10,8 @@ import { WeatherDataService } from '../weather-data.service';
 export class WeatherTableComponent implements OnInit {
 
   constructor(private weatherDataService: WeatherDataService) {
-    this.weatherCards = new Array(0);
+    this.weatherCards = new Array(5);
     this.region = "NAN";
-    this.fromDate = new Date();
-    this.toDate = new Date();
   }
 
   ngOnInit(): void {
@@ -22,6 +20,4 @@ export class WeatherTableComponent implements OnInit {
 
   weatherCards: Array<WeatherCard>;
   @Input() region: string;
-  @Input() fromDate: Date;
-  @Input() toDate: Date;
 }

@@ -1,4 +1,5 @@
 import { Input, Component, ElementRef } from '@angular/core';
+import { LocationItem } from './location-item';
 import { LocationService } from './location.service';
 
 @Component({
@@ -12,20 +13,20 @@ export class AppComponent {
   constructor(
     private eltRef: ElementRef,
     private locationService: LocationService) {
-    let nativeElement = eltRef.nativeElement;
+    const nativeElement = eltRef.nativeElement;
 
     this.baseApiUrl = nativeElement.getAttribute('baseapiurl');
     this.query = nativeElement.getAttribute('query');
-  }
- 
-  ngOnInit(): void {
+    this.searchLocations = new Array(0);
+
     const result = this.locationService.getLocation(
       this.baseApiUrl,
       this.query);
 
-    result.then(a => { console.log(a); });
+    result.then(a => { this.searchLocations = a.locations });
   }
-
+ 
+  searchLocations: Array<LocationItem> 
   baseApiUrl: string;
   query: string;
 }

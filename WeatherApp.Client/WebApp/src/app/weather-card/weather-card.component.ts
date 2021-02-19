@@ -17,7 +17,8 @@ export class WeatherCardComponent implements OnInit {
   }
 
   getWeatherImage(): string {
-    return this.weatherImageService.getWeatherImageUrl(this.model.iconShortHand);
+    return this.weatherImageService
+      .getWeatherImageUrl(this.model.iconShortHand);
   }
 
   @Input() model: WeatherCard

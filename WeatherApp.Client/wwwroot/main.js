@@ -122,16 +122,14 @@ function WeatherTableComponent_div_1_Template(rf, ctx) { if (rf & 1) {
 class WeatherTableComponent {
     constructor(weatherDataService) {
         this.weatherDataService = weatherDataService;
-        this.weatherCards = new Array(0);
+        this.weatherCards = new Array(5);
         this.region = "NAN";
-        this.fromDate = new Date();
-        this.toDate = new Date();
     }
     ngOnInit() {
     }
 }
 WeatherTableComponent.ɵfac = function WeatherTableComponent_Factory(t) { return new (t || WeatherTableComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_weather_data_service__WEBPACK_IMPORTED_MODULE_1__["WeatherDataService"])); };
-WeatherTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WeatherTableComponent, selectors: [["app-weather-table"]], inputs: { region: "region", fromDate: "fromDate", toDate: "toDate" }, decls: 2, vars: 1, consts: [[1, "row"], ["class", "col", 4, "ngFor", "ngForOf"], [1, "col"]], template: function WeatherTableComponent_Template(rf, ctx) { if (rf & 1) {
+WeatherTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WeatherTableComponent, selectors: [["app-weather-table"]], inputs: { region: "region" }, decls: 2, vars: 1, consts: [[1, "row"], ["class", "col", 4, "ngFor", "ngForOf"], [1, "col"]], template: function WeatherTableComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, WeatherTableComponent_div_1_Template, 2, 0, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -147,10 +145,6 @@ WeatherTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵde
                 styleUrls: ['./weather-table.component.scss']
             }]
     }], function () { return [{ type: _weather_data_service__WEBPACK_IMPORTED_MODULE_1__["WeatherDataService"] }]; }, { region: [{
-            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
-        }], fromDate: [{
-            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
-        }], toDate: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
         }] }); })();
 
@@ -169,30 +163,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WeatherDataService", function() { return WeatherDataService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var _configuration_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./configuration.service */ "nkFk");
+
 
 
 
 
 class WeatherDataService {
-    constructor(httpClient) {
+    constructor(httpClient, configurationService) {
         this.httpClient = httpClient;
+        this.configurationService = configurationService;
+        this.getWeatherForecast = "";
     }
-    getWeatherData(region, fromDate, toDate) {
+    getWeatherData(baseUrl, region, fromDate, toDate) {
         const fromDateParameter = fromDate.toISOString();
         const toDateParameter = toDate.toISOString();
+        const headers = this
+            .configurationService
+            .getHttpHeaders();
         const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromObject: { region, fromDateParameter, toDateParameter } });
-        this.httpClient.get("http://www.google.com", { params });
-        return new Promise((resolve) => resolve(Array(5)));
+        const response = this.httpClient.get(baseUrl + this.getWeatherForecast, { headers, params });
+        return response.toPromise();
     }
 }
-WeatherDataService.ɵfac = function WeatherDataService_Factory(t) { return new (t || WeatherDataService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };
+WeatherDataService.ɵfac = function WeatherDataService_Factory(t) { return new (t || WeatherDataService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_configuration_service__WEBPACK_IMPORTED_MODULE_2__["ConfigurationService"])); };
 WeatherDataService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: WeatherDataService, factory: WeatherDataService.ɵfac, providedIn: 'root' });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](WeatherDataService, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
         args: [{
                 providedIn: 'root'
             }]
-    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }]; }, null); })();
+    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }, { type: _configuration_service__WEBPACK_IMPORTED_MODULE_2__["ConfigurationService"] }]; }, null); })();
 
 
 /***/ }),
@@ -219,13 +220,12 @@ class AppComponent {
         this.eltRef = eltRef;
         this.locationService = locationService;
         this.title = 'Weather App';
-        let nativeElement = eltRef.nativeElement;
+        const nativeElement = eltRef.nativeElement;
         this.baseApiUrl = nativeElement.getAttribute('baseapiurl');
         this.query = nativeElement.getAttribute('query');
-    }
-    ngOnInit() {
+        this.searchLocations = new Array(0);
         const result = this.locationService.getLocation(this.baseApiUrl, this.query);
-        result.then(a => { console.log(a); });
+        result.then(a => { this.searchLocations = a.locations; });
     }
 }
 AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_location_service__WEBPACK_IMPORTED_MODULE_1__["LocationService"])); };
@@ -261,29 +261,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LocationService", function() { return LocationService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var _configuration_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./configuration.service */ "nkFk");
+
 
 
 
 
 class LocationService {
-    constructor(httpService) {
+    constructor(httpService, configurationService) {
         this.httpService = httpService;
+        this.configurationService = configurationService;
         this.getLocationUrl = "location";
     }
     getLocation(baseUrl, query) {
         const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromObject: { query } });
-        const response = this.httpService.get(baseUrl + this.getLocationUrl, { params });
+        const headers = this
+            .configurationService
+            .getHttpHeaders();
+        const response = this.httpService
+            .get(baseUrl + this.getLocationUrl, { headers, params });
         return response.toPromise();
     }
 }
-LocationService.ɵfac = function LocationService_Factory(t) { return new (t || LocationService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };
+LocationService.ɵfac = function LocationService_Factory(t) { return new (t || LocationService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_configuration_service__WEBPACK_IMPORTED_MODULE_2__["ConfigurationService"])); };
 LocationService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: LocationService, factory: LocationService.ɵfac, providedIn: 'root' });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](LocationService, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
         args: [{
                 providedIn: 'root'
             }]
-    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }]; }, null); })();
+    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }, { type: _configuration_service__WEBPACK_IMPORTED_MODULE_2__["ConfigurationService"] }]; }, null); })();
 
 
 /***/ }),
@@ -342,6 +349,40 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
 
 /***/ }),
 
+/***/ "nkFk":
+/*!******************************************!*\
+  !*** ./src/app/configuration.service.ts ***!
+  \******************************************/
+/*! exports provided: ConfigurationService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConfigurationService", function() { return ConfigurationService; });
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+
+
+
+class ConfigurationService {
+    constructor() { }
+    getHttpHeaders() {
+        return new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpHeaders"]()
+            .set("x-api-key", "YzgzMzgyNjAtOTg3NC00ZTA4LWFiZDAtN2E3ZWZlM2Y2OTY4");
+    }
+}
+ConfigurationService.ɵfac = function ConfigurationService_Factory(t) { return new (t || ConfigurationService)(); };
+ConfigurationService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjectable"]({ token: ConfigurationService, factory: ConfigurationService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](ConfigurationService, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"],
+        args: [{
+                providedIn: 'root'
+            }]
+    }], function () { return []; }, null); })();
+
+
+/***/ }),
+
 /***/ "nmbp":
 /*!********************************************************!*\
   !*** ./src/app/weather-card/weather-card.component.ts ***!
@@ -367,7 +408,8 @@ class WeatherCardComponent {
     ngOnInit() {
     }
     getWeatherImage() {
-        return this.weatherImageService.getWeatherImageUrl(this.model.iconShortHand);
+        return this.weatherImageService
+            .getWeatherImageUrl(this.model.iconShortHand);
     }
 }
 WeatherCardComponent.ɵfac = function WeatherCardComponent_Factory(t) { return new (t || WeatherCardComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_weather_image_service__WEBPACK_IMPORTED_MODULE_2__["WeatherImageService"])); };

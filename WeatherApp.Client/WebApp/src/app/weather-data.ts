@@ -1,13 +1,17 @@
 export class WeatherData {
-  constructor(weatherStateAbbr: string,
-    applicableDate: Date,
+  constructor(
+    state: string,
+    stateAbbreviation: string,
+    date: Date,
     temperature: number) {
-    this.weatherStateAbbr = weatherStateAbbr;
-    this.applicableDate = applicableDate;
+    this.state = state;
+    this.stateAbbreviation = stateAbbreviation;
+    this.date = date;
     this.temperature = temperature;
   }
 
-  weatherStateAbbr: string;
-  applicableDate: Date;
+  state: string;
+  stateAbbreviation: string;
+  date: Date;
   temperature: number;
 }
