@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Primitives;
 
 namespace WeatherApp.Shared
 {
@@ -9,8 +10,9 @@ namespace WeatherApp.Shared
         {
             configuration
                 .Bind(this);
-        }
+        } 
 
         public string DataProviderBaseUrl { get; set; }
+        public string ApiKey { get; set; }
     }
 }

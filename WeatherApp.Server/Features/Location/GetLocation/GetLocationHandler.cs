@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using WeatherApp.Shared.Contracts.Convertors;
 using WeatherApp.Shared.Contracts.Providers;
 using WeatherApp.Shared.Models;
-using WeatherApp.Shared.Response;
+using WeatherApp.Shared.Responses;
 
 namespace WeatherApp.Server.Features.Location.GetLocation
 {

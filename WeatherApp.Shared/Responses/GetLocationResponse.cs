@@ -2,7 +2,7 @@
 using WeatherApp.Shared.Base;
 using WeatherApp.Shared.Models;
 
-namespace WeatherApp.Shared.Response
+namespace WeatherApp.Shared.Responses
 {
     public class GetLocationResponse : ResponseBase
     {

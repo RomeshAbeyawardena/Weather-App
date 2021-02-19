@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WeatherApp.Shared.Response;
+using WeatherApp.Shared.Responses;
 
 namespace WeatherApp.Server.Features.Weather.GetWeatherForecast
 {

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using WeatherApp.Shared.Base;
 using WeatherApp.Shared.Models;
 
-namespace WeatherApp.Shared.Response
+namespace WeatherApp.Shared.Responses
 {
     public class GetWeatherForecastResponse : ResponseBase
     {
-        public IEnumerable<WeatherForecast> WeatherForecasts { get; set; }
+        public IEnumerable<WeatherForecast> WeatherForecast { get; set; }
     }
 }

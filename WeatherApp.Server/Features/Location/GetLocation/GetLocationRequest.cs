@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using WeatherApp.Shared.Response;
+using WeatherApp.Shared.Responses;
 
 namespace WeatherApp.Server.Features.Location.GetLocation
 {

@@ -1,5 +1,6 @@
 ﻿using FluentValidation.Results;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
@@ -7,10 +8,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WeatherApp.Shared.Base;
+using WeatherApp.Shared.Constants;
 
 namespace WeatherApp.Server.Base
 {
-    [ApiController, 
+    [Authorize( 
+        AuthenticationSchemes = PolicyConstants.ApiKeyAuthenticationScheme, 
+        Policy = PolicyConstants.ApiKeyPolicy),
+     ApiController, 
      Route("[controller]")]
     public class MediatrControllerBase 
         : ControllerBase

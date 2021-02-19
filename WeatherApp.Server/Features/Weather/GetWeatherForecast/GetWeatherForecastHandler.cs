@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WeatherApp.Shared.Contracts.Providers;
 using Models = WeatherApp.Shared.Models;
-using WeatherApp.Shared.Response;
+using WeatherApp.Shared.Responses;
 
 namespace WeatherApp.Server.Features.Weather.GetWeatherForecast
 {
@@ -26,7 +26,7 @@ namespace WeatherApp.Server.Features.Weather.GetWeatherForecast
 
             return new GetWeatherForecastResponse 
             { 
-                WeatherForecasts = weatherForecasts 
+                WeatherForecast = weatherForecasts 
             };
         }
 
