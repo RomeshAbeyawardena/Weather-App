@@ -3,6 +3,7 @@ import { WeatherImageService } from '../weather-image.service';
 import { WeatherCard } from './weathercard';
 import { WeatherData } from '../weather-data';
 import { Observable } from 'rxjs';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-weather-card',
@@ -13,11 +14,13 @@ export class WeatherCardComponent implements OnInit {
 
   constructor(private weatherImageService: WeatherImageService) {
     this.model = new WeatherCard("NAN", 0, "sn", false);
-    this.weather = new Observable<WeatherData>();
+    this.weather = new WeatherData("", "", new Date(), 0);
   }
 
   ngOnInit(): void {
-    
+    this.model.dayOfWeek = moment(this.weather.date).format("dddd");
+    this.model.iconShortHand = this.weather.stateAbbreviation;
+    this.model.temperature = this.weather.temperature;
   }
 
   getWeatherImage(): string {
@@ -25,6 +28,6 @@ export class WeatherCardComponent implements OnInit {
       .getWeatherImageUrl(this.model.iconShortHand);
   }
 
-  @Input() weather: Observable<WeatherData>;
+  @Input() weather: WeatherData;
   model: WeatherCard
 }
