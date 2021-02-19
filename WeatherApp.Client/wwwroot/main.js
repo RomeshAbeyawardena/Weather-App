@@ -23,9 +23,10 @@ module.exports = __webpack_require__(/*! C:\Dev\Root\WeatherApp\WeatherApp.Clien
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WeatherCard", function() { return WeatherCard; });
 class WeatherCard {
-    constructor(dayOfWeek, temperature, iconShortHand, isCurrentDayOfWeek) {
+    constructor(dayOfWeek, date, temperature, iconShortHand, isCurrentDayOfWeek) {
         this.dayOfWeek = dayOfWeek;
-        this.temperature = temperature;
+        this.date = date,
+            this.temperature = temperature;
         this.iconShortHand = iconShortHand;
         this.isCurrentDayOfWeek = isCurrentDayOfWeek;
     }
@@ -140,16 +141,25 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function WeatherTableComponent_div_2_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 3);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "app-weather-card", 4);
+function WeatherTableComponent_div_1_div_1_Template(rf, ctx) { if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "app-weather-card", 5);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
-    const weatherDataItem_r2 = ctx.$implicit;
+    const weatherDataItem_r3 = ctx.$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("weather", weatherDataItem_r2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("weather", weatherDataItem_r3);
 } }
-function WeatherTableComponent_div_3_Template(rf, ctx) { if (rf & 1) {
+function WeatherTableComponent_div_1_Template(rf, ctx) { if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, WeatherTableComponent_div_1_div_1_Template, 2, 1, "div", 3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+} if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r0.weatherData);
+} }
+function WeatherTableComponent_div_2_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "app-loader");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -190,19 +200,17 @@ class WeatherTableComponent {
     }
 }
 WeatherTableComponent.ɵfac = function WeatherTableComponent_Factory(t) { return new (t || WeatherTableComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_weather_data_service__WEBPACK_IMPORTED_MODULE_2__["WeatherDataService"])); };
-WeatherTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WeatherTableComponent, selectors: [["app-weather-table"]], inputs: { locations: "locations" }, decls: 4, vars: 2, consts: [[1, "row"], ["class", "col", 4, "ngFor", "ngForOf"], [4, "ngIf"], [1, "col"], [3, "weather"]], template: function WeatherTableComponent_Template(rf, ctx) { if (rf & 1) {
+WeatherTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WeatherTableComponent, selectors: [["app-weather-table"]], inputs: { locations: "locations" }, decls: 3, vars: 2, consts: [["class", "row", 4, "ngIf"], [4, "ngIf"], [1, "row"], ["class", "col", 4, "ngFor", "ngForOf"], [1, "col"], [3, "weather"]], template: function WeatherTableComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 0);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, WeatherTableComponent_div_2_Template, 2, 1, "div", 1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](3, WeatherTableComponent_div_3_Template, 2, 0, "div", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, WeatherTableComponent_div_1_Template, 2, 1, "div", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, WeatherTableComponent_div_2_Template, 2, 0, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.weatherData);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", !ctx.isLoading);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.isLoading);
-    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgForOf"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["NgIf"], _weather_card_weather_card_component__WEBPACK_IMPORTED_MODULE_4__["WeatherCardComponent"], _loader_loader_component__WEBPACK_IMPORTED_MODULE_5__["LoaderComponent"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ3ZWF0aGVyLXRhYmxlLmNvbXBvbmVudC5zY3NzIn0= */"] });
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["NgForOf"], _weather_card_weather_card_component__WEBPACK_IMPORTED_MODULE_4__["WeatherCardComponent"], _loader_loader_component__WEBPACK_IMPORTED_MODULE_5__["LoaderComponent"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ3ZWF0aGVyLXRhYmxlLmNvbXBvbmVudC5zY3NzIn0= */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](WeatherTableComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -830,12 +838,13 @@ __webpack_require__.r(__webpack_exports__);
 class WeatherCardComponent {
     constructor(weatherImageService) {
         this.weatherImageService = weatherImageService;
-        this.model = new _weathercard__WEBPACK_IMPORTED_MODULE_1__["WeatherCard"]("NAN", 0, "sn", false);
+        this.model = new _weathercard__WEBPACK_IMPORTED_MODULE_1__["WeatherCard"]("NAN", "", 0, "sn", false);
         this.weather = new _weather_data__WEBPACK_IMPORTED_MODULE_2__["WeatherData"]("", "", new Date(), 0);
     }
     ngOnInit() {
         const currentDate = moment__WEBPACK_IMPORTED_MODULE_3__();
         const forecastDate = moment__WEBPACK_IMPORTED_MODULE_3__(this.weather.date);
+        this.model.date = forecastDate.format("dddd DD MMM yyyy");
         this.model.isCurrentDayOfWeek = forecastDate.isSame(currentDate, "day");
         this.model.dayOfWeek = forecastDate.format("dddd");
         this.model.iconShortHand = this.weather.stateAbbreviation;
@@ -845,17 +854,9 @@ class WeatherCardComponent {
         return this.weatherImageService
             .getWeatherImageUrl(this.model.iconShortHand);
     }
-    displayIf(expression, displayIfTrue, displayIfFalse) {
-        if (expression)
-            return displayIfTrue;
-        if (displayIfFalse === null
-            || displayIfFalse === undefined)
-            return "";
-        return displayIfFalse;
-    }
 }
 WeatherCardComponent.ɵfac = function WeatherCardComponent_Factory(t) { return new (t || WeatherCardComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_weather_image_service__WEBPACK_IMPORTED_MODULE_4__["WeatherImageService"])); };
-WeatherCardComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WeatherCardComponent, selectors: [["app-weather-card"]], inputs: { weather: "weather" }, decls: 7, vars: 4, consts: [[1, "card", "weather-card"], [3, "ngClass"], ["alt", "...", 1, "card-img-top", 3, "src"], [1, "card-body"], [1, "card-title", "text-center"]], template: function WeatherCardComponent_Template(rf, ctx) { if (rf & 1) {
+WeatherCardComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WeatherCardComponent, selectors: [["app-weather-card"]], inputs: { weather: "weather" }, decls: 7, vars: 5, consts: [[1, "card", "weather-card"], [3, "title", "ngClass"], ["alt", "...", 1, "card-img-top", 3, "src"], [1, "card-body"], [1, "card-title", "text-center"]], template: function WeatherCardComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
@@ -869,7 +870,7 @@ WeatherCardComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", ctx.model.isCurrentDayOfWeek ? "card-header bg-primary text-light text-center" : "card-header text-center");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("title", ctx.model.date)("ngClass", ctx.model.isCurrentDayOfWeek ? "card-header bg-primary text-light text-center" : "card-header text-center");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx.model.dayOfWeek, " ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);

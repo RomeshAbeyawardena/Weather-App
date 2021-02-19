@@ -22,7 +22,6 @@ export class AppComponent {
     this.query = nativeElement.getAttribute('query');
 
     this.searchLocations = new Observable<Array<LocationItem>>();
-
     sessionStorage.setItem(
       "baseApiUrl",
       this.baseApiUrl);
@@ -36,7 +35,8 @@ export class AppComponent {
     this.searchLocations = result
       .pipe(map((locationResponse: LocationResponse) => locationResponse.locations));
   }
-  searchLocations: Observable<Array<LocationItem>> 
+
+  searchLocations: Observable<Array<LocationItem>>; 
   baseApiUrl: string;
   query: string;
 }
