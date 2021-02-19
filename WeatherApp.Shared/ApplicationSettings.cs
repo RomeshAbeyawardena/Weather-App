@@ -10,8 +10,11 @@ namespace WeatherApp.Shared
         {
             configuration
                 .Bind(this);
+            WeatherAppClientContextConnection = configuration
+                .GetConnectionString(nameof(WeatherAppClientContextConnection));
         } 
 
+        public string WeatherAppClientContextConnection { get; set; }
         public string DataProviderBaseUrl { get; set; }
         public string ApiKey { get; set; }
     }

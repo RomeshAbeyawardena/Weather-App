@@ -18,6 +18,11 @@ namespace WeatherApp.Client
                 .AddSingleton<ApplicationSettings>();
 
             services
+                .AddAuthentication()
+                .AddCookie();
+
+            services
+                .AddAuthorization()
                 .AddControllersWithViews();
 
             services
@@ -36,7 +41,10 @@ namespace WeatherApp.Client
             app.UseStaticFiles();
             app.UseRouting();
             app.UseCors();
+
+            app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints

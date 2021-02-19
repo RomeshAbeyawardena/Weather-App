@@ -7,7 +7,7 @@ namespace WeatherApp.Client.Controllers
 {
     public class HomeController : Controller
     {
-        [HttpGet, Authorize] 
+        [HttpGet, Authorize()] 
         public IActionResult Index(string query)
         {
             if (string.IsNullOrWhiteSpace(query))
