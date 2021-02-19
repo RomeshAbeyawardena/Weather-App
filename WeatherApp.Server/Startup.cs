@@ -48,12 +48,21 @@ namespace WeatherApp.Server
                 .AddScoped(RegisterClient)
                 .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidateRequestPipelineBehavior<,>))
                 .AddTransient<IAuthorizationHandler, ApiKeyAuthorisationHandler>()
-                .AddLogging()
+                .AddLogging();
+
+             services
+                .AddCors(options => options.AddPolicy(PolicyConstants.ClientCorsPolicy, 
+                    builder => builder
+                    .WithOrigins(
+                        "https://localhost:5201", 
+                        "http://localhost:5200")
+                    .WithMethods("GET")
+                    .AllowAnyHeader()))
                 .AddAuthorization(ConfigureAuthorisation)
                 .AddAuthentication(ConfigureAuthentication);
-                services
-                    .AddCors()
-                    .AddControllers();
+            
+           
+                services.AddControllers();
         }
 
 
@@ -67,10 +76,10 @@ namespace WeatherApp.Server
         {
             options
                 .AddPolicy(
-                PolicyConstants.ApiKeyPolicy,
-                policyBuilder => policyBuilder
-                    .AddAuthenticationSchemes(PolicyConstants.ApiKeyAuthenticationScheme)
-                    .AddRequirements(new ApiKeyRequirement()));
+                    PolicyConstants.ApiKeyPolicy,
+                    policyBuilder => policyBuilder
+                        .AddAuthenticationSchemes(PolicyConstants.ApiKeyAuthenticationScheme)
+                        .AddRequirements(new ApiKeyRequirement()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,8 +91,9 @@ namespace WeatherApp.Server
             }
 
             app.UseRouting();
+            app.UseCors(PolicyConstants
+                .ClientCorsPolicy);
             app.UseAuthorization();
-            app.UseCors(p => p.WithOrigins("localhost").WithMethods("GET"));
             app.UseEndpoints(endpoints =>
             {
                  endpoints

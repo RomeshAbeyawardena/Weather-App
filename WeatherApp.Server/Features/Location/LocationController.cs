@@ -8,7 +8,7 @@ namespace WeatherApp.Server.Features.Location
 {
     public class LocationController : MediatrControllerBase
     {
-        [HttpGet]
+        [HttpGet, HttpOptions]
         public Task<IActionResult> GetLocation([FromQuery]GetLocationRequest request,
             CancellationToken cancellationToken)
         {
