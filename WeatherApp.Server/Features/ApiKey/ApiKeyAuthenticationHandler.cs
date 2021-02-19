@@ -45,7 +45,9 @@ namespace WeatherApp.Server.Features.ApiKey
             }
 
             var claimsIdentity = new ClaimsIdentity(
-                new [] { new Claim("ValidApiKeyUser", bool.TrueString) } );
+                new [] { new Claim(
+                    PolicyConstants.IsValidApiKeyUser, 
+                    bool.TrueString) } );
 
             var claimPrinciple = new ClaimsPrincipal(
                 claimsIdentity);

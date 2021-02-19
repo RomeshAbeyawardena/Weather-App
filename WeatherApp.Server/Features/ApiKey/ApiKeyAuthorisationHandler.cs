@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeatherApp.Shared.Constants;
 
 namespace WeatherApp.Server.Features.ApiKey
 {
@@ -14,7 +15,7 @@ namespace WeatherApp.Server.Features.ApiKey
             await Task.CompletedTask;
             
             if(!context.User
-                .Claims.Any(c => c.Type == "ValidApiKeyUser" 
+                .Claims.Any(c => c.Type == PolicyConstants.IsValidApiKeyUser
                     && c.Value == bool.TrueString))
             {
                 context.Fail();
