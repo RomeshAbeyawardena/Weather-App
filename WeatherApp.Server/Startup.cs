@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,8 +52,10 @@ namespace WeatherApp.Server
                 .AddAuthorization(ConfigureAuthorisation)
                 .AddAuthentication(ConfigureAuthentication);
                 services
+                    .AddCors()
                     .AddControllers();
         }
+
 
         private void ConfigureAuthentication(AuthenticationOptions options)
         {
@@ -80,6 +83,7 @@ namespace WeatherApp.Server
 
             app.UseRouting();
             app.UseAuthorization();
+            app.UseCors(p => p.WithOrigins("localhost").WithMethods("GET"));
             app.UseEndpoints(endpoints =>
             {
                  endpoints

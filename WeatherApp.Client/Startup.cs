@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WeatherApp.Shared;
 
 namespace WeatherApp.Client
 {
@@ -11,8 +12,10 @@ namespace WeatherApp.Client
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(
             IServiceCollection services)
-        {
-            services.AddControllersWithViews();
+        { 
+            services 
+                .AddSingleton<ApplicationSettings>()
+                .AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -26,7 +29,7 @@ namespace WeatherApp.Client
             }
             app.UseStaticFiles();
             app.UseRouting();
-
+            app.UseCors();
             app.UseEndpoints(endpoints =>
             {
                 endpoints

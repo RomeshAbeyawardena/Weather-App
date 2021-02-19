@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WeatherApp.Client.ViewModels.Home;
+using WeatherApp.Shared;
 
 namespace WeatherApp.Client.Controllers
 {
@@ -7,7 +9,19 @@ namespace WeatherApp.Client.Controllers
         [HttpGet] 
         public IActionResult Index()
         {
-            return View();
+            return View(
+                new IndexViewModel { 
+                    ApiBaseUrl = applicationSettings
+                        .DataProviderBaseUrl
+                });
         }
+
+        public HomeController(
+            ApplicationSettings applicationSettings)
+        {
+            this.applicationSettings = applicationSettings;
+        }
+
+        private readonly ApplicationSettings applicationSettings;
     }
 }

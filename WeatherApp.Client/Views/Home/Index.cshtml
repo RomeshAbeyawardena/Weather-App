@@ -1,4 +1,7 @@
-﻿<app-root></app-root>
+﻿@model IndexViewModel
+
+<app-root baseApiUrl="@Model.ApiBaseUrl" 
+          query="Belfast"></app-root>
 <script src="runtime.js" defer></script>
 <script src="polyfills.js" defer></script>
 <script src="vendor.js" defer></script>

@@ -1,9 +1,9 @@
+import { LocationItem } from './location-item';
+
 export class LocationResponse {
-  constructor(woeId: number, title: string) {
-    this.woeId = woeId;
-    this.title = title;
+  constructor() {
+    this.locations = new Array(0);
   }
 
-  woeId: number;
-  title: string;
+  locations: Array<LocationItem>;
 }
