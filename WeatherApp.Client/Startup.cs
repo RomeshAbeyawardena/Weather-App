@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using WeatherApp.Client.Middleware;
 using WeatherApp.Shared;
 using WeatherApp.Shared.Models;
 
@@ -38,13 +41,13 @@ namespace WeatherApp.Client
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions { OnPrepareResponse = PrepareStaticFileResponse });
             app.UseRouting();
             app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseMiddleware<IncludeHeadersMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints
@@ -55,6 +58,16 @@ namespace WeatherApp.Client
                 endpoints
                     .MapDefaultControllerRoute();
             });
+        }
+
+        private void PrepareStaticFileResponse(StaticFileResponseContext context)
+        {
+            var headers = context.Context.Response.Headers;
+            
+            headers
+                .Add("cache-control", "private,max-age=31536000,immutable");
+            headers 
+                .Add("x-content-type-options", "nosniff");
         }
     }
 }
