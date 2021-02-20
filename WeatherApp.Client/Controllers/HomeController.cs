@@ -10,7 +10,7 @@ namespace WeatherApp.Client.Controllers
         [HttpGet, Authorize()] 
         public IActionResult Index(
             string query, 
-            bool showTemperature)
+            bool displayTemperature)
         {
             if (string.IsNullOrWhiteSpace(query))
             {
@@ -24,7 +24,7 @@ namespace WeatherApp.Client.Controllers
                     Query = query,
                     ApiBaseUrl = applicationSettings
                         .DataProviderBaseUrl,
-                    DisplayTemperature = showTemperature
+                    DisplayTemperature = displayTemperature
                 });
         }
 
