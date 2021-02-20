@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
+using System.Collections.Generic;
 
 namespace WeatherApp.Shared
 {
@@ -17,6 +18,8 @@ namespace WeatherApp.Shared
         public int TotalDaysToDisplay { get; set; }
         public string WeatherAppClientContextConnection { get; set; }
         public string DataProviderBaseUrl { get; set; }
+        public IEnumerable<string> AcceptedClients { get; set; }
+        public IEnumerable<string> AcceptedMethods { get; set; }
         public string ApiKey { get; set; }
     }
 }

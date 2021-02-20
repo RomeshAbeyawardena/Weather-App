@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RestSharp;
@@ -30,7 +31,6 @@ namespace WeatherApp.Server
         {
             var currentAssembly = typeof(Startup).Assembly;
             var sharedAssembly = typeof(Shared.Models.Location).Assembly;
-
             services
                 .AddHttpContextAccessor()
                 .AddValidatorsFromAssembly(currentAssembly)
@@ -45,19 +45,13 @@ namespace WeatherApp.Server
                     .AddClasses(c => c.Where(type => ServiceConstants.ServerServiceTypes
                         .Any(st => type.Name.EndsWith(st))))
                     .AsImplementedInterfaces())
-                .AddScoped(RegisterClient)
+                .AddScoped(RegisterRestClient)
                 .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidateRequestPipelineBehavior<,>))
                 .AddTransient<IAuthorizationHandler, ApiKeyAuthorisationHandler>()
                 .AddLogging();
 
              services
-                .AddCors(options => options.AddPolicy(PolicyConstants.ClientCorsPolicy, 
-                    builder => builder
-                    .WithOrigins(
-                        "https://localhost:5201", 
-                        "http://localhost:5200")
-                    .WithMethods("GET")
-                    .AllowAnyHeader()))
+                .AddCors()
                 .AddAuthorization(ConfigureAuthorisation)
                 .AddAuthentication(ConfigureAuthentication);
             
@@ -65,25 +59,8 @@ namespace WeatherApp.Server
                 services.AddControllers();
         }
 
-
-        private void ConfigureAuthentication(AuthenticationOptions options)
-        {
-            options.AddScheme(PolicyConstants.ApiKeyAuthenticationScheme, 
-                builder => { builder.HandlerType = typeof(ApiKeyAuthenticationHandler); });
-        }
-
-        private void ConfigureAuthorisation(AuthorizationOptions options)
-        {
-            options
-                .AddPolicy(
-                    PolicyConstants.ApiKeyPolicy,
-                    policyBuilder => policyBuilder
-                        .AddAuthenticationSchemes(PolicyConstants.ApiKeyAuthenticationScheme)
-                        .AddRequirements(new ApiKeyRequirement()));
-        }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationSettings applicationSettings)
         {
             if (env.IsDevelopment())
             {
@@ -91,8 +68,7 @@ namespace WeatherApp.Server
             }
 
             app.UseRouting();
-            app.UseCors(PolicyConstants
-                .ClientCorsPolicy);
+            app.UseCors(builder => CorsPolicyBuild(builder, applicationSettings));
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
@@ -106,8 +82,37 @@ namespace WeatherApp.Server
             });
         }
 
+        private void ConfigureAuthentication(
+            AuthenticationOptions options)
+        {
+            options.AddScheme(PolicyConstants.ApiKeyAuthenticationScheme, 
+                builder => { builder.HandlerType = typeof(ApiKeyAuthenticationHandler); });
+        }
+
+        private void ConfigureAuthorisation(
+            AuthorizationOptions options)
+        {
+            options
+                .AddPolicy(
+                    PolicyConstants.ApiKeyPolicy,
+                    policyBuilder => policyBuilder
+                        .AddAuthenticationSchemes(PolicyConstants.ApiKeyAuthenticationScheme)
+                        .AddRequirements(new ApiKeyRequirement()));
+        }
+
+        private void CorsPolicyBuild(
+            CorsPolicyBuilder builder, 
+            ApplicationSettings applicationSettings)
+        {
+            builder
+                .WithOrigins(applicationSettings
+                    .AcceptedClients.ToArray())
+                    .WithMethods("GET")
+                    .AllowAnyHeader();
+        }
         
-        private IRestClient RegisterClient(IServiceProvider serviceProvider)
+        private IRestClient RegisterRestClient(
+            IServiceProvider serviceProvider)
         {
             var applicationSettings = serviceProvider
                 .GetRequiredService<ApplicationSettings>();
