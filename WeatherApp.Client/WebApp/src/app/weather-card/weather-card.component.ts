@@ -1,7 +1,7 @@
 import { Input, Component, OnInit } from '@angular/core';
-import { WeatherImageService } from '../weather-image.service';
+import { WeatherImageService } from '../services/weather-image/weather-image.service';
 import { WeatherCard } from './weathercard';
-import { WeatherData } from '../weather-data';
+import { WeatherData } from '../services/weather-data/weather-data';
 import * as moment from 'moment';
 
 @Component({

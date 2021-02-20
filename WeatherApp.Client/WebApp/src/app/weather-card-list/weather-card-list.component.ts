@@ -1,16 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LocationItem } from '../location-item';
-import { WeatherData } from '../weather-data';
-import { WeatherDataService } from '../weather-data.service';
-import { WeatherResponse } from '../weather-response';
+import { LocationItem } from '../services/location/location-item';
+import { WeatherData } from '../services/weather-data/weather-data';
+import { WeatherDataService } from '../services/weather-data/weather-data.service';
+import { WeatherResponse } from '../services/weather-data/weather-response';
 
 @Component({
-  selector: 'app-weather-table',
-  templateUrl: './weather-table.component.html',
-  styleUrls: ['./weather-table.component.scss']
+  selector: 'app-weather-card-list',
+  templateUrl: './weather-card-list.component.html',
+  styleUrls: ['./weather-card-list.component.scss']
 })
-export class WeatherTableComponent implements OnInit {
+export class WeatherCardListComponent implements OnInit {
 
   constructor(private weatherDataService: WeatherDataService) {
     this.weatherData = new Array<WeatherData>();
@@ -55,7 +55,7 @@ export class WeatherTableComponent implements OnInit {
         next(weatherResponse: WeatherResponse) {
           context.weatherData = weatherResponse.weatherForecast;
           context.isLoading = false;
-        } });
+        }, error(errorResponse){ console.log("WeatherTableComponent", errorResponse); } });
   }
 
   baseApiUrl: string;

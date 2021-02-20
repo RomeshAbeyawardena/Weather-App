@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using FluentValidation.Results;
+using MediatR;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WeatherApp.Shared.Contracts.Convertors;
@@ -60,10 +62,18 @@ namespace WeatherApp.Server.Features.Location.GetLocation
                         query, 
                         cancellationToken);
 
-            return new GetLocationResponse
-            {
-                Locations = locations
-            };
+            return locations.Any() 
+                ? new GetLocationResponse
+                {
+                    Locations = locations
+                }
+                : new GetLocationResponse
+                {
+                    Errors = new [] { new ValidationFailure(
+                        "validationErrors", 
+                        $"There are no locations that match {query}") 
+                    }
+                };
         }
 
         public GetLocationHandler(

@@ -1,6 +1,7 @@
 <div>
+  <app-alert [model]="alert"></app-alert>
   <h1 class="mb-3">Weather forecast for {{ query }}</h1>
-  <app-weather-table [displayTemperature]="displayTemperature"
+  <app-weather-card-list [displayTemperature]="displayTemperature"
                      [totalDays]="totalDays"
-                     [locations]="searchLocations"></app-weather-table>
+                     [locations]="searchLocations"></app-weather-card-list>
 </div>

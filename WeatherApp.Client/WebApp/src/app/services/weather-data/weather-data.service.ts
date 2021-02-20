@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ConfigurationService } from './configuration.service';
+import { ConfigurationService } from '../configuration/configuration.service';
 import { WeatherResponse } from './weather-response';
-import { LocationItem } from './location-item';
+import { LocationItem } from '../location/location-item';
 import { Observable } from 'rxjs';
 
 @Injectable({

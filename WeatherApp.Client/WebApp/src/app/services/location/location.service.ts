@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocationResponse } from './location-response';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ConfigurationService } from './configuration.service';
+import { ConfigurationService } from '../configuration/configuration.service';
 import { Observable } from 'rxjs';
 
 @Injectable({
