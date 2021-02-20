@@ -19,7 +19,7 @@ export class WeatherCardComponent implements OnInit {
   ngOnInit(): void {
     const currentDate = moment();
     const forecastDate = moment(this.weather.date);
-    this.model.date = forecastDate.format("dddd DD MMM yyyy");
+    this.model.date = forecastDate.format("DD MMM yyyy");
     this.model.isCurrentDayOfWeek = forecastDate.isSame(currentDate, "day"); 
     this.model.dayOfWeek = forecastDate.format("dddd");
     this.model.iconShortHand = this.weather.stateAbbreviation;
