@@ -5,7 +5,8 @@ export class WeatherCard {
     date: string,
     temperature: number,
     iconShortHand: string,
-    isCurrentDayOfWeek: boolean
+    isCurrentDayOfWeek: boolean,
+    displayTemperature: boolean
     )
   {
     this.dayOfWeek = dayOfWeek;
@@ -13,8 +14,10 @@ export class WeatherCard {
     this.temperature = temperature;
     this.iconShortHand = iconShortHand;
     this.isCurrentDayOfWeek = isCurrentDayOfWeek;
+    this.displayTemperature = displayTemperature;
   }
 
+  displayTemperature: boolean;
   dayOfWeek: string;
   date: string;
   temperature: number;

@@ -3,7 +3,8 @@
     {{ model.dayOfWeek }}
   </div>
   <img [src]="getWeatherImage()" class="card-img-top" alt="...">
-  <div class="card-body">
+  
+  <div *ngIf="model.displayTemperature" class="card-body">
     <h5 class="card-title  text-center">{{model.temperature}} &deg;C</h5>
   </div>
   <div class="card-footer bg-white text-muted text-center">

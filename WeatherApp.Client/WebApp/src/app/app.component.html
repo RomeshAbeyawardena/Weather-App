@@ -1,4 +1,6 @@
 <div>
   <h1 class="mb-3">Weather forecast for {{ query }}</h1>
-  <app-weather-table [totalDays]="totalDays" [locations]="searchLocations"></app-weather-table>
+  <app-weather-table [showTemperature]="showTemperature"
+                     [totalDays]="totalDays"
+                     [locations]="searchLocations"></app-weather-table>
 </div>

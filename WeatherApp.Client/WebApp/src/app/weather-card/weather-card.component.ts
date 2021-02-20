@@ -12,7 +12,8 @@ import * as moment from 'moment';
 export class WeatherCardComponent implements OnInit {
 
   constructor(private weatherImageService: WeatherImageService) {
-    this.model = new WeatherCard("NAN", "", 0, "sn", false);
+    this.model = new WeatherCard("NAN", "", 0, "sn", false, false);
+    this.showTemperature = false;
     this.weather = new WeatherData("", "", new Date(), 0);
   }
 
@@ -24,6 +25,7 @@ export class WeatherCardComponent implements OnInit {
     this.model.dayOfWeek = forecastDate.format("dddd");
     this.model.iconShortHand = this.weather.stateAbbreviation;
     this.model.temperature = Math.round(this.weather.temperature);
+    this.model.displayTemperature = this.showTemperature;
   }
 
   getWeatherImage(): string {
@@ -31,6 +33,7 @@ export class WeatherCardComponent implements OnInit {
       .getWeatherImageUrl(this.model.iconShortHand);
   }
 
+  @Input() showTemperature: boolean;
   @Input() weather: WeatherData;
   model: WeatherCard
 }

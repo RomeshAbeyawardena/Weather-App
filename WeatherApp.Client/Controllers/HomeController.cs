@@ -8,7 +8,9 @@ namespace WeatherApp.Client.Controllers
     public class HomeController : Controller
     {
         [HttpGet, Authorize()] 
-        public IActionResult Index(string query)
+        public IActionResult Index(
+            string query, 
+            bool showTemperature)
         {
             if (string.IsNullOrWhiteSpace(query))
             {
@@ -21,7 +23,8 @@ namespace WeatherApp.Client.Controllers
                         .TotalDaysToDisplay,
                     Query = query,
                     ApiBaseUrl = applicationSettings
-                        .DataProviderBaseUrl
+                        .DataProviderBaseUrl,
+                    DisplayTemperature = showTemperature
                 });
         }
 

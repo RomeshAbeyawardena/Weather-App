@@ -1,6 +1,6 @@
 import { Component, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, filter, catchError, mergeMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { LocationItem } from './location-item';
 import { LocationResponse } from './location-response';
 import { LocationService } from './location.service';
@@ -21,6 +21,10 @@ export class AppComponent {
     this.baseApiUrl = nativeElement.getAttribute('baseapiurl');
     this.query = nativeElement.getAttribute('query');
     this.totalDays = nativeElement.getAttribute('totaldays');
+    const value =  nativeElement.getAttribute('showtemperature'); 
+    
+    this.showTemperature = value === 'showTemperature'
+    
     this.searchLocations = new Observable<Array<LocationItem>>();
     sessionStorage.setItem(
       "baseApiUrl",
@@ -36,6 +40,7 @@ export class AppComponent {
       .pipe(map((locationResponse: LocationResponse) => locationResponse.locations));
   }
 
+  showTemperature: boolean;
   totalDays: number;
   searchLocations: Observable<Array<LocationItem>>; 
   baseApiUrl: string;
