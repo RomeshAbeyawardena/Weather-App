@@ -150,7 +150,7 @@ function WeatherTableComponent_div_1_div_1_Template(rf, ctx) { if (rf & 1) {
     const weatherDataItem_r3 = ctx.$implicit;
     const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("weather", weatherDataItem_r3)("showTemperature", ctx_r2.showTemperature);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("weather", weatherDataItem_r3)("displayTemperature", ctx_r2.displayTemperature);
 } }
 function WeatherTableComponent_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 2);
@@ -179,7 +179,7 @@ class WeatherTableComponent {
         this.baseApiUrl = baseUrl;
         this.isLoading = true;
         this.totalDays = 0;
-        this.showTemperature = false;
+        this.displayTemperature = false;
     }
     ngOnInit() {
         const context = this;
@@ -204,7 +204,7 @@ class WeatherTableComponent {
     }
 }
 WeatherTableComponent.ɵfac = function WeatherTableComponent_Factory(t) { return new (t || WeatherTableComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_weather_data_service__WEBPACK_IMPORTED_MODULE_2__["WeatherDataService"])); };
-WeatherTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WeatherTableComponent, selectors: [["app-weather-table"]], inputs: { showTemperature: "showTemperature", totalDays: "totalDays", locations: "locations" }, decls: 3, vars: 2, consts: [["class", "row", 4, "ngIf"], [4, "ngIf"], [1, "row"], ["class", "col", 4, "ngFor", "ngForOf"], [1, "col"], [3, "weather", "showTemperature"]], template: function WeatherTableComponent_Template(rf, ctx) { if (rf & 1) {
+WeatherTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WeatherTableComponent, selectors: [["app-weather-table"]], inputs: { displayTemperature: "displayTemperature", totalDays: "totalDays", locations: "locations" }, decls: 3, vars: 2, consts: [["class", "row", 4, "ngIf"], [4, "ngIf"], [1, "row"], ["class", "col", 4, "ngFor", "ngForOf"], [1, "col"], [3, "weather", "displayTemperature"]], template: function WeatherTableComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, WeatherTableComponent_div_1_Template, 2, 1, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, WeatherTableComponent_div_2_Template, 2, 0, "div", 1);
@@ -222,7 +222,7 @@ WeatherTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵde
                 templateUrl: './weather-table.component.html',
                 styleUrls: ['./weather-table.component.scss']
             }]
-    }], function () { return [{ type: _weather_data_service__WEBPACK_IMPORTED_MODULE_2__["WeatherDataService"] }]; }, { showTemperature: [{
+    }], function () { return [{ type: _weather_data_service__WEBPACK_IMPORTED_MODULE_2__["WeatherDataService"] }]; }, { displayTemperature: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
         }], totalDays: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
@@ -619,8 +619,8 @@ class AppComponent {
         this.baseApiUrl = nativeElement.getAttribute('baseapiurl');
         this.query = nativeElement.getAttribute('query');
         this.totalDays = nativeElement.getAttribute('totaldays');
-        const value = nativeElement.getAttribute('showtemperature');
-        this.showTemperature = value === 'showTemperature';
+        const value = nativeElement.getAttribute('displaytemperature');
+        this.displayTemperature = value === 'displayTemperature';
         this.searchLocations = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"]();
         sessionStorage.setItem("baseApiUrl", this.baseApiUrl);
     }
@@ -631,7 +631,7 @@ class AppComponent {
     }
 }
 AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_location_service__WEBPACK_IMPORTED_MODULE_3__["LocationService"])); };
-AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 4, vars: 4, consts: [[1, "mb-3"], [3, "showTemperature", "totalDays", "locations"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
+AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 4, vars: 4, consts: [[1, "mb-3"], [3, "displayTemperature", "totalDays", "locations"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "h1", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
@@ -642,7 +642,7 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("Weather forecast for ", ctx.query, "");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("showTemperature", ctx.showTemperature)("totalDays", ctx.totalDays)("locations", ctx.searchLocations);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("displayTemperature", ctx.displayTemperature)("totalDays", ctx.totalDays)("locations", ctx.searchLocations);
     } }, directives: [_weather_table_weather_table_component__WEBPACK_IMPORTED_MODULE_4__["WeatherTableComponent"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAuY29tcG9uZW50LnNjc3MifQ== */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AppComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
@@ -867,7 +867,7 @@ class WeatherCardComponent {
     constructor(weatherImageService) {
         this.weatherImageService = weatherImageService;
         this.model = new _weathercard__WEBPACK_IMPORTED_MODULE_1__["WeatherCard"]("NAN", "", 0, "sn", false, false);
-        this.showTemperature = false;
+        this.displayTemperature = false;
         this.weather = new _weather_data__WEBPACK_IMPORTED_MODULE_2__["WeatherData"]("", "", new Date(), 0);
     }
     ngOnInit() {
@@ -878,7 +878,7 @@ class WeatherCardComponent {
         this.model.dayOfWeek = forecastDate.format("dddd");
         this.model.iconShortHand = this.weather.stateAbbreviation;
         this.model.temperature = Math.round(this.weather.temperature);
-        this.model.displayTemperature = this.showTemperature;
+        this.model.displayTemperature = this.displayTemperature;
     }
     getWeatherImage() {
         return this.weatherImageService
@@ -886,7 +886,7 @@ class WeatherCardComponent {
     }
 }
 WeatherCardComponent.ɵfac = function WeatherCardComponent_Factory(t) { return new (t || WeatherCardComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_weather_image_service__WEBPACK_IMPORTED_MODULE_4__["WeatherImageService"])); };
-WeatherCardComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WeatherCardComponent, selectors: [["app-weather-card"]], inputs: { showTemperature: "showTemperature", weather: "weather" }, decls: 7, vars: 6, consts: [[1, "card", "weather-card", "mb-sm-4", "mb-2"], [3, "title", "ngClass"], ["alt", "...", 1, "card-img-top", 3, "src"], ["class", "card-body", 4, "ngIf"], [1, "card-footer", "bg-white", "text-muted", "text-center"], [1, "card-body"], [1, "card-title", "text-center"]], template: function WeatherCardComponent_Template(rf, ctx) { if (rf & 1) {
+WeatherCardComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WeatherCardComponent, selectors: [["app-weather-card"]], inputs: { displayTemperature: "displayTemperature", weather: "weather" }, decls: 7, vars: 6, consts: [[1, "card", "weather-card", "mb-sm-4", "mb-2"], [3, "title", "ngClass"], ["alt", "...", 1, "card-img-top", 3, "src"], ["class", "card-body", 4, "ngIf"], [1, "card-footer", "bg-white", "text-muted", "text-center"], [1, "card-body"], [1, "card-title", "text-center"]], template: function WeatherCardComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
@@ -916,7 +916,7 @@ WeatherCardComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
                 templateUrl: './weather-card.component.html',
                 styleUrls: ['./weather-card.component.scss']
             }]
-    }], function () { return [{ type: _weather_image_service__WEBPACK_IMPORTED_MODULE_4__["WeatherImageService"] }]; }, { showTemperature: [{
+    }], function () { return [{ type: _weather_image_service__WEBPACK_IMPORTED_MODULE_4__["WeatherImageService"] }]; }, { displayTemperature: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
         }], weather: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]

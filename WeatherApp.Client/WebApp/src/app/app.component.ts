@@ -21,9 +21,9 @@ export class AppComponent {
     this.baseApiUrl = nativeElement.getAttribute('baseapiurl');
     this.query = nativeElement.getAttribute('query');
     this.totalDays = nativeElement.getAttribute('totaldays');
-    const value =  nativeElement.getAttribute('showtemperature'); 
+    const value =  nativeElement.getAttribute('displaytemperature'); 
     
-    this.showTemperature = value === 'showTemperature'
+    this.displayTemperature = value === 'displayTemperature'
     
     this.searchLocations = new Observable<Array<LocationItem>>();
     sessionStorage.setItem(
@@ -40,7 +40,7 @@ export class AppComponent {
       .pipe(map((locationResponse: LocationResponse) => locationResponse.locations));
   }
 
-  showTemperature: boolean;
+  displayTemperature: boolean;
   totalDays: number;
   searchLocations: Observable<Array<LocationItem>>; 
   baseApiUrl: string;

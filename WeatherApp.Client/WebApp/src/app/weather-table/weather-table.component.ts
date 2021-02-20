@@ -26,7 +26,7 @@ export class WeatherTableComponent implements OnInit {
     this.baseApiUrl = baseUrl;
     this.isLoading = true;
     this.totalDays = 0;
-    this.showTemperature = false;
+    this.displayTemperature = false;
   }
 
   ngOnInit(): void {
@@ -61,7 +61,7 @@ export class WeatherTableComponent implements OnInit {
   baseApiUrl: string;
   isLoading: boolean;
   weatherData: Array<WeatherData>;
-  @Input() showTemperature: boolean;
+  @Input() displayTemperature: boolean;
   @Input() totalDays: number;
   @Input() locations: Observable<Array<LocationItem>>
 }
