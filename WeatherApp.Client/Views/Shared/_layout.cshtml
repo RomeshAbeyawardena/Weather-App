@@ -10,6 +10,24 @@
     @RenderSection("scripts", false)
 </head>
 <body>
-    @RenderBody()
+    @if(User.Identity.IsAuthenticated)
+    { 
+        <div class="container-fluid">
+            <div class="row pt-3 pb-3 bg-primary">
+                <div class="col-7">
+                    <p class="text-light m-0 mt-2">Weather App</p>
+                </div>
+                <div class="col-4 align-middle d-none d-lg-block">
+                    <p class="text-right text-light m-0 mt-2">@User.Identity.Name</p>
+                </div>
+                <div class="col-lg-1 col-sm-5 text-right">
+                    <a class="btn btn-danger" href="@Url.Action("Logout", "Account", new { Area = "Identity" })">Logout</a>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="container mt-2">
+        @RenderBody()
+    </div>
 </body>
 </html>
