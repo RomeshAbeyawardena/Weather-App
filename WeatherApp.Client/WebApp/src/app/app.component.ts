@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Alert } from './alert/alert';
 import { ErrorResponse } from './ErrorResponse';
 import { LocationItem } from './services/location/location-item';
@@ -29,6 +29,7 @@ export class AppComponent {
     this.displayTemperature = value === 'displayTemperature'
     this.alert = new Alert("", "");
     this.searchLocations = new Observable<Array<LocationItem>>();
+    this.hasError = false;
 
     sessionStorage.setItem(
       "baseApiUrl",
@@ -39,21 +40,22 @@ export class AppComponent {
     const result = this.locationService.getLocation(
       this.baseApiUrl,
       this.query);
-
-    const context = this;
-    result
-      .subscribe({ error(errorResponse: HttpErrorResponse){ context.handleError(errorResponse.error as ErrorResponse) } });
-
-    this.searchLocations = result
-      .pipe(map((locationResponse: LocationResponse) => locationResponse.locations));
     
+      const context = this;
+
+      this.searchLocations = result
+        .pipe(
+          map((locationResponse: LocationResponse) => locationResponse.locations),
+          catchError(errorResponse => {
+            context.handleError(
+              errorResponse.error as ErrorResponse);
+            return new Array(0); }));
   }
 
   handleError(error: ErrorResponse) {
     this.alert.message = error.validationErrors[0];
     this.alert.type = "danger";
-
-    console.log("WeatherTableComponent", alert);
+    this.hasError = true;
   }
 
   alert: Alert;
@@ -62,4 +64,5 @@ export class AppComponent {
   searchLocations: Observable<Array<LocationItem>>; 
   baseApiUrl: string;
   query: string;
+  hasError: boolean;
 }

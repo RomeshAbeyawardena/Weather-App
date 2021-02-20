@@ -27,6 +27,7 @@ export class WeatherCardListComponent implements OnInit {
     this.isLoading = true;
     this.totalDays = 0;
     this.displayTemperature = false;
+    this.hasError = false;
   }
 
   ngOnInit(): void {
@@ -55,12 +56,17 @@ export class WeatherCardListComponent implements OnInit {
         next(weatherResponse: WeatherResponse) {
           context.weatherData = weatherResponse.weatherForecast;
           context.isLoading = false;
-        }, error(errorResponse){ console.log("WeatherTableComponent", errorResponse); } });
+        }, error(errorResponse){
+          console.log("WeatherTableComponent", errorResponse);
+          context.isLoading = false;
+        } });
   }
 
-  baseApiUrl: string;
+  private baseApiUrl: string;
   isLoading: boolean;
   weatherData: Array<WeatherData>;
+
+  @Input() hasError: boolean; 
   @Input() displayTemperature: boolean;
   @Input() totalDays: number;
   @Input() locations: Observable<Array<LocationItem>>

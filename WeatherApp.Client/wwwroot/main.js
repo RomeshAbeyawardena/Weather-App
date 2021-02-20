@@ -600,24 +600,26 @@ class AppComponent {
         this.displayTemperature = value === 'displayTemperature';
         this.alert = new _alert_alert__WEBPACK_IMPORTED_MODULE_3__["Alert"]("", "");
         this.searchLocations = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"]();
+        this.hasError = false;
         sessionStorage.setItem("baseApiUrl", this.baseApiUrl);
     }
     ngOnInit() {
         const result = this.locationService.getLocation(this.baseApiUrl, this.query);
         const context = this;
-        result
-            .subscribe({ error(errorResponse) { context.handleError(errorResponse.error); } });
         this.searchLocations = result
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])((locationResponse) => locationResponse.locations));
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])((locationResponse) => locationResponse.locations), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(errorResponse => {
+            context.handleError(errorResponse.error);
+            return new Array(0);
+        }));
     }
     handleError(error) {
         this.alert.message = error.validationErrors[0];
         this.alert.type = "danger";
-        console.log("WeatherTableComponent", alert);
+        this.hasError = true;
     }
 }
 AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_location_location_service__WEBPACK_IMPORTED_MODULE_4__["LocationService"])); };
-AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 5, vars: 5, consts: [[3, "model"], [1, "mb-3"], [3, "displayTemperature", "totalDays", "locations"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
+AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 5, vars: 6, consts: [[3, "model"], [1, "mb-3"], [3, "displayTemperature", "hasError", "totalDays", "locations"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "app-alert", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "h1", 1);
@@ -631,7 +633,7 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("Weather forecast for ", ctx.query, "");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("displayTemperature", ctx.displayTemperature)("totalDays", ctx.totalDays)("locations", ctx.searchLocations);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("displayTemperature", ctx.displayTemperature)("hasError", ctx.hasError)("totalDays", ctx.totalDays)("locations", ctx.searchLocations);
     } }, directives: [_alert_alert_component__WEBPACK_IMPORTED_MODULE_5__["ErrorAlertComponent"], _weather_card_list_weather_card_list_component__WEBPACK_IMPORTED_MODULE_6__["WeatherCardListComponent"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAuY29tcG9uZW50LnNjc3MifQ== */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AppComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
@@ -721,8 +723,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "qCKp");
 /* harmony import */ var _services_weather_data_weather_data_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/weather-data/weather-data.service */ "3c76");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "ofXK");
-/* harmony import */ var _weather_card_weather_card_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../weather-card/weather-card.component */ "nmbp");
-/* harmony import */ var _loader_loader_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../loader/loader.component */ "kQyY");
+/* harmony import */ var _loader_loader_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../loader/loader.component */ "kQyY");
+/* harmony import */ var _weather_card_weather_card_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../weather-card/weather-card.component */ "nmbp");
 
 
 
@@ -735,10 +737,10 @@ function WeatherCardListComponent_div_1_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "app-weather-card", 5);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
-    const weatherDataItem_r3 = ctx.$implicit;
-    const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+    const weatherDataItem_r2 = ctx.$implicit;
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("weather", weatherDataItem_r3)("displayTemperature", ctx_r2.displayTemperature);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("weather", weatherDataItem_r2)("displayTemperature", ctx_r1.displayTemperature);
 } }
 function WeatherCardListComponent_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 2);
@@ -748,11 +750,6 @@ function WeatherCardListComponent_div_1_Template(rf, ctx) { if (rf & 1) {
     const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r0.weatherData);
-} }
-function WeatherCardListComponent_div_2_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "app-loader");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
 class WeatherCardListComponent {
     constructor(weatherDataService) {
@@ -768,6 +765,7 @@ class WeatherCardListComponent {
         this.isLoading = true;
         this.totalDays = 0;
         this.displayTemperature = false;
+        this.hasError = false;
     }
     ngOnInit() {
         const context = this;
@@ -788,22 +786,27 @@ class WeatherCardListComponent {
                 context.weatherData = weatherResponse.weatherForecast;
                 context.isLoading = false;
             },
-            error(errorResponse) { console.log("WeatherTableComponent", errorResponse); }
+            error(errorResponse) {
+                console.log("WeatherTableComponent", errorResponse);
+                context.isLoading = false;
+            }
         });
     }
 }
 WeatherCardListComponent.ɵfac = function WeatherCardListComponent_Factory(t) { return new (t || WeatherCardListComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_weather_data_weather_data_service__WEBPACK_IMPORTED_MODULE_2__["WeatherDataService"])); };
-WeatherCardListComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WeatherCardListComponent, selectors: [["app-weather-card-list"]], inputs: { displayTemperature: "displayTemperature", totalDays: "totalDays", locations: "locations" }, decls: 3, vars: 2, consts: [["class", "row", 4, "ngIf"], [4, "ngIf"], [1, "row"], ["class", "col", 4, "ngFor", "ngForOf"], [1, "col"], [3, "weather", "displayTemperature"]], template: function WeatherCardListComponent_Template(rf, ctx) { if (rf & 1) {
+WeatherCardListComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WeatherCardListComponent, selectors: [["app-weather-card-list"]], inputs: { hasError: "hasError", displayTemperature: "displayTemperature", totalDays: "totalDays", locations: "locations" }, decls: 4, vars: 2, consts: [["class", "row", 4, "ngIf"], [3, "display"], [1, "row"], ["class", "col", 4, "ngFor", "ngForOf"], [1, "col"], [3, "weather", "displayTemperature"]], template: function WeatherCardListComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, WeatherCardListComponent_div_1_Template, 2, 1, "div", 0);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, WeatherCardListComponent_div_2_Template, 2, 0, "div", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](3, "app-loader", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", !ctx.isLoading);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.isLoading);
-    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["NgForOf"], _weather_card_weather_card_component__WEBPACK_IMPORTED_MODULE_4__["WeatherCardComponent"], _loader_loader_component__WEBPACK_IMPORTED_MODULE_5__["LoaderComponent"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ3ZWF0aGVyLWNhcmQtbGlzdC5jb21wb25lbnQuc2NzcyJ9 */"] });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("display", !ctx.hasError && ctx.isLoading);
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgIf"], _loader_loader_component__WEBPACK_IMPORTED_MODULE_4__["LoaderComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["NgForOf"], _weather_card_weather_card_component__WEBPACK_IMPORTED_MODULE_5__["WeatherCardComponent"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ3ZWF0aGVyLWNhcmQtbGlzdC5jb21wb25lbnQuc2NzcyJ9 */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](WeatherCardListComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -811,7 +814,9 @@ WeatherCardListComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵ�
                 templateUrl: './weather-card-list.component.html',
                 styleUrls: ['./weather-card-list.component.scss']
             }]
-    }], function () { return [{ type: _services_weather_data_weather_data_service__WEBPACK_IMPORTED_MODULE_2__["WeatherDataService"] }]; }, { displayTemperature: [{
+    }], function () { return [{ type: _services_weather_data_weather_data_service__WEBPACK_IMPORTED_MODULE_2__["WeatherDataService"] }]; }, { hasError: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
+        }], displayTemperature: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
         }], totalDays: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
@@ -833,17 +838,26 @@ WeatherCardListComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵ�
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoaderComponent", function() { return LoaderComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "ofXK");
 
 
+
+function LoaderComponent_div_0_Template(rf, ctx) { if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "div", 1);
+} }
 class LoaderComponent {
-    constructor() { }
+    constructor() {
+        this.display = false;
+    }
     ngOnInit() {
     }
 }
 LoaderComponent.ɵfac = function LoaderComponent_Factory(t) { return new (t || LoaderComponent)(); };
-LoaderComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: LoaderComponent, selectors: [["app-loader"]], decls: 1, vars: 0, consts: [[1, "loader"]], template: function LoaderComponent_Template(rf, ctx) { if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "div", 0);
-    } }, styles: [".loader[_ngcontent-%COMP%] {\n  animation: spin 1s infinite linear;\n  border: solid 2vmin transparent;\n  border-radius: 50%;\n  border-right-color: #09f;\n  border-top-color: #09f;\n  box-sizing: border-box;\n  height: 20vmin;\n  left: calc(50% - 10vmin);\n  position: fixed;\n  top: calc(50% - 10vmin);\n  width: 20vmin;\n  z-index: 1;\n}\n.loader[_ngcontent-%COMP%]:before {\n  animation: spin 2s infinite linear;\n  border: solid 2vmin transparent;\n  border-radius: 50%;\n  border-right-color: #3cf;\n  border-top-color: #3cf;\n  box-sizing: border-box;\n  content: \"\";\n  height: 16vmin;\n  left: 0;\n  position: absolute;\n  top: 0;\n  width: 16vmin;\n}\n.loader[_ngcontent-%COMP%]:after {\n  animation: spin 3s infinite linear;\n  border: solid 2vmin transparent;\n  border-radius: 50%;\n  border-right-color: #6ff;\n  border-top-color: #6ff;\n  box-sizing: border-box;\n  content: \"\";\n  height: 12vmin;\n  left: 2vmin;\n  position: absolute;\n  top: 2vmin;\n  width: 12vmin;\n}\n@keyframes spin {\n  100% {\n    transform: rotate(360deg);\n  }\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXGxvYWRlci5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGtDQUFBO0VBQ0EsK0JBQUE7RUFDQSxrQkFBQTtFQUNBLHdCQUFBO0VBQ0Esc0JBQUE7RUFDQSxzQkFBQTtFQUNBLGNBQUE7RUFDQSx3QkFBQTtFQUNBLGVBQUE7RUFDQSx1QkFBQTtFQUNBLGFBQUE7RUFDQSxVQUFBO0FBQ0Y7QUFDRTtFQUNFLGtDQUFBO0VBQ0EsK0JBQUE7RUFDQSxrQkFBQTtFQUNBLHdCQUFBO0VBQ0Esc0JBQUE7RUFDQSxzQkFBQTtFQUNBLFdBQUE7RUFDQSxjQUFBO0VBQ0EsT0FBQTtFQUNBLGtCQUFBO0VBQ0EsTUFBQTtFQUNBLGFBQUE7QUFDSjtBQUVFO0VBQ0Usa0NBQUE7RUFDQSwrQkFBQTtFQUNBLGtCQUFBO0VBQ0Esd0JBQUE7RUFDQSxzQkFBQTtFQUNBLHNCQUFBO0VBQ0EsV0FBQTtFQUNBLGNBQUE7RUFDQSxXQUFBO0VBQ0Esa0JBQUE7RUFDQSxVQUFBO0VBQ0EsYUFBQTtBQUFKO0FBSUE7RUFDRTtJQUNFLHlCQUFBO0VBREY7QUFDRiIsImZpbGUiOiJsb2FkZXIuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIubG9hZGVyIHtcclxuICBhbmltYXRpb246IHNwaW4gMXMgaW5maW5pdGUgbGluZWFyO1xyXG4gIGJvcmRlcjogc29saWQgMnZtaW4gdHJhbnNwYXJlbnQ7XHJcbiAgYm9yZGVyLXJhZGl1czogNTAlO1xyXG4gIGJvcmRlci1yaWdodC1jb2xvcjogIzA5ZjtcclxuICBib3JkZXItdG9wLWNvbG9yOiAjMDlmO1xyXG4gIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XHJcbiAgaGVpZ2h0OiAyMHZtaW47XHJcbiAgbGVmdDogY2FsYyg1MCUgLSAxMHZtaW4pO1xyXG4gIHBvc2l0aW9uOiBmaXhlZDtcclxuICB0b3A6IGNhbGMoNTAlIC0gMTB2bWluKTtcclxuICB3aWR0aDogMjB2bWluO1xyXG4gIHotaW5kZXg6IDE7XHJcblxyXG4gICY6YmVmb3JlIHtcclxuICAgIGFuaW1hdGlvbjogc3BpbiAycyBpbmZpbml0ZSBsaW5lYXI7XHJcbiAgICBib3JkZXI6IHNvbGlkIDJ2bWluIHRyYW5zcGFyZW50O1xyXG4gICAgYm9yZGVyLXJhZGl1czogNTAlO1xyXG4gICAgYm9yZGVyLXJpZ2h0LWNvbG9yOiAjM2NmO1xyXG4gICAgYm9yZGVyLXRvcC1jb2xvcjogIzNjZjtcclxuICAgIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XHJcbiAgICBjb250ZW50OiBcIlwiO1xyXG4gICAgaGVpZ2h0OiAxNnZtaW47XHJcbiAgICBsZWZ0OiAwO1xyXG4gICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgdG9wOiAwO1xyXG4gICAgd2lkdGg6IDE2dm1pbjtcclxuICB9XHJcblxyXG4gICY6YWZ0ZXIge1xyXG4gICAgYW5pbWF0aW9uOiBzcGluIDNzIGluZmluaXRlIGxpbmVhcjtcclxuICAgIGJvcmRlcjogc29saWQgMnZtaW4gdHJhbnNwYXJlbnQ7XHJcbiAgICBib3JkZXItcmFkaXVzOiA1MCU7XHJcbiAgICBib3JkZXItcmlnaHQtY29sb3I6ICM2ZmY7XHJcbiAgICBib3JkZXItdG9wLWNvbG9yOiAjNmZmO1xyXG4gICAgYm94LXNpemluZzogYm9yZGVyLWJveDtcclxuICAgIGNvbnRlbnQ6IFwiXCI7XHJcbiAgICBoZWlnaHQ6IDEydm1pbjtcclxuICAgIGxlZnQ6IDJ2bWluO1xyXG4gICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgdG9wOiAydm1pbjtcclxuICAgIHdpZHRoOiAxMnZtaW47XHJcbiAgfVxyXG59XHJcblxyXG5Aa2V5ZnJhbWVzIHNwaW4ge1xyXG4gIDEwMCUge1xyXG4gICAgdHJhbnNmb3JtOiByb3RhdGUoMzYwZGVnKTtcclxuICB9XHJcbn1cclxuIl19 */"] });
+LoaderComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: LoaderComponent, selectors: [["app-loader"]], inputs: { display: "display" }, decls: 1, vars: 1, consts: [["class", "loader", 4, "ngIf"], [1, "loader"]], template: function LoaderComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, LoaderComponent_div_0_Template, 1, 0, "div", 0);
+    } if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.display);
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["NgIf"]], styles: [".loader[_ngcontent-%COMP%] {\n  animation: spin 1s infinite linear;\n  border: solid 2vmin transparent;\n  border-radius: 50%;\n  border-right-color: #09f;\n  border-top-color: #09f;\n  box-sizing: border-box;\n  height: 20vmin;\n  left: calc(50% - 10vmin);\n  position: fixed;\n  top: calc(50% - 10vmin);\n  width: 20vmin;\n  z-index: 1;\n}\n.loader[_ngcontent-%COMP%]:before {\n  animation: spin 2s infinite linear;\n  border: solid 2vmin transparent;\n  border-radius: 50%;\n  border-right-color: #3cf;\n  border-top-color: #3cf;\n  box-sizing: border-box;\n  content: \"\";\n  height: 16vmin;\n  left: 0;\n  position: absolute;\n  top: 0;\n  width: 16vmin;\n}\n.loader[_ngcontent-%COMP%]:after {\n  animation: spin 3s infinite linear;\n  border: solid 2vmin transparent;\n  border-radius: 50%;\n  border-right-color: #6ff;\n  border-top-color: #6ff;\n  box-sizing: border-box;\n  content: \"\";\n  height: 12vmin;\n  left: 2vmin;\n  position: absolute;\n  top: 2vmin;\n  width: 12vmin;\n}\n@keyframes spin {\n  100% {\n    transform: rotate(360deg);\n  }\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXGxvYWRlci5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGtDQUFBO0VBQ0EsK0JBQUE7RUFDQSxrQkFBQTtFQUNBLHdCQUFBO0VBQ0Esc0JBQUE7RUFDQSxzQkFBQTtFQUNBLGNBQUE7RUFDQSx3QkFBQTtFQUNBLGVBQUE7RUFDQSx1QkFBQTtFQUNBLGFBQUE7RUFDQSxVQUFBO0FBQ0Y7QUFDRTtFQUNFLGtDQUFBO0VBQ0EsK0JBQUE7RUFDQSxrQkFBQTtFQUNBLHdCQUFBO0VBQ0Esc0JBQUE7RUFDQSxzQkFBQTtFQUNBLFdBQUE7RUFDQSxjQUFBO0VBQ0EsT0FBQTtFQUNBLGtCQUFBO0VBQ0EsTUFBQTtFQUNBLGFBQUE7QUFDSjtBQUVFO0VBQ0Usa0NBQUE7RUFDQSwrQkFBQTtFQUNBLGtCQUFBO0VBQ0Esd0JBQUE7RUFDQSxzQkFBQTtFQUNBLHNCQUFBO0VBQ0EsV0FBQTtFQUNBLGNBQUE7RUFDQSxXQUFBO0VBQ0Esa0JBQUE7RUFDQSxVQUFBO0VBQ0EsYUFBQTtBQUFKO0FBSUE7RUFDRTtJQUNFLHlCQUFBO0VBREY7QUFDRiIsImZpbGUiOiJsb2FkZXIuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIubG9hZGVyIHtcclxuICBhbmltYXRpb246IHNwaW4gMXMgaW5maW5pdGUgbGluZWFyO1xyXG4gIGJvcmRlcjogc29saWQgMnZtaW4gdHJhbnNwYXJlbnQ7XHJcbiAgYm9yZGVyLXJhZGl1czogNTAlO1xyXG4gIGJvcmRlci1yaWdodC1jb2xvcjogIzA5ZjtcclxuICBib3JkZXItdG9wLWNvbG9yOiAjMDlmO1xyXG4gIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XHJcbiAgaGVpZ2h0OiAyMHZtaW47XHJcbiAgbGVmdDogY2FsYyg1MCUgLSAxMHZtaW4pO1xyXG4gIHBvc2l0aW9uOiBmaXhlZDtcclxuICB0b3A6IGNhbGMoNTAlIC0gMTB2bWluKTtcclxuICB3aWR0aDogMjB2bWluO1xyXG4gIHotaW5kZXg6IDE7XHJcblxyXG4gICY6YmVmb3JlIHtcclxuICAgIGFuaW1hdGlvbjogc3BpbiAycyBpbmZpbml0ZSBsaW5lYXI7XHJcbiAgICBib3JkZXI6IHNvbGlkIDJ2bWluIHRyYW5zcGFyZW50O1xyXG4gICAgYm9yZGVyLXJhZGl1czogNTAlO1xyXG4gICAgYm9yZGVyLXJpZ2h0LWNvbG9yOiAjM2NmO1xyXG4gICAgYm9yZGVyLXRvcC1jb2xvcjogIzNjZjtcclxuICAgIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XHJcbiAgICBjb250ZW50OiBcIlwiO1xyXG4gICAgaGVpZ2h0OiAxNnZtaW47XHJcbiAgICBsZWZ0OiAwO1xyXG4gICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgdG9wOiAwO1xyXG4gICAgd2lkdGg6IDE2dm1pbjtcclxuICB9XHJcblxyXG4gICY6YWZ0ZXIge1xyXG4gICAgYW5pbWF0aW9uOiBzcGluIDNzIGluZmluaXRlIGxpbmVhcjtcclxuICAgIGJvcmRlcjogc29saWQgMnZtaW4gdHJhbnNwYXJlbnQ7XHJcbiAgICBib3JkZXItcmFkaXVzOiA1MCU7XHJcbiAgICBib3JkZXItcmlnaHQtY29sb3I6ICM2ZmY7XHJcbiAgICBib3JkZXItdG9wLWNvbG9yOiAjNmZmO1xyXG4gICAgYm94LXNpemluZzogYm9yZGVyLWJveDtcclxuICAgIGNvbnRlbnQ6IFwiXCI7XHJcbiAgICBoZWlnaHQ6IDEydm1pbjtcclxuICAgIGxlZnQ6IDJ2bWluO1xyXG4gICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgdG9wOiAydm1pbjtcclxuICAgIHdpZHRoOiAxMnZtaW47XHJcbiAgfVxyXG59XHJcblxyXG5Aa2V5ZnJhbWVzIHNwaW4ge1xyXG4gIDEwMCUge1xyXG4gICAgdHJhbnNmb3JtOiByb3RhdGUoMzYwZGVnKTtcclxuICB9XHJcbn1cclxuIl19 */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](LoaderComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -851,7 +865,9 @@ LoaderComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCo
                 templateUrl: './loader.component.html',
                 styleUrls: ['./loader.component.scss']
             }]
-    }], function () { return []; }, null); })();
+    }], function () { return []; }, { display: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
+        }] }); })();
 
 
 /***/ }),

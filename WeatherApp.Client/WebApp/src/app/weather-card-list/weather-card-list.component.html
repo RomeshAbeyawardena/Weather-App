@@ -4,7 +4,7 @@
       <app-weather-card [weather]="weatherDataItem" [displayTemperature]="displayTemperature"></app-weather-card>
     </div>
   </div>
-  <div *ngIf="isLoading">
-    <app-loader></app-loader>
+  <div>
+    <app-loader [display]="!hasError && isLoading"></app-loader>
   </div>
 </div>

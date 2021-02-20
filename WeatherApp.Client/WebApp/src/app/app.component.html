@@ -2,6 +2,7 @@
   <app-alert [model]="alert"></app-alert>
   <h1 class="mb-3">Weather forecast for {{ query }}</h1>
   <app-weather-card-list [displayTemperature]="displayTemperature"
+                     [hasError]="hasError"
                      [totalDays]="totalDays"
                      [locations]="searchLocations"></app-weather-card-list>
 </div>
