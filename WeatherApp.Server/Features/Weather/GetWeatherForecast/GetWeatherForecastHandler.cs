@@ -26,7 +26,9 @@ namespace WeatherApp.Server.Features.Weather.GetWeatherForecast
 
             return new GetWeatherForecastResponse 
             { 
-                WeatherForecast = weatherForecasts 
+                WeatherForecast = request.TotalDays.HasValue 
+                    ? weatherForecasts.Take(request.TotalDays.Value) 
+                    : weatherForecasts
             };
         }
 

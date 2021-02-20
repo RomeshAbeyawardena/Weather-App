@@ -12,5 +12,6 @@ namespace WeatherApp.Server.Features.Weather.GetWeatherForecast
         : IRequest<GetWeatherForecastResponse>
     {
         public int Id { get; set; }
+        public int? TotalDays { get; set; }
     }
 }

@@ -20,7 +20,7 @@ export class AppComponent {
 
     this.baseApiUrl = nativeElement.getAttribute('baseapiurl');
     this.query = nativeElement.getAttribute('query');
-
+    this.totalDays = nativeElement.getAttribute('totaldays');
     this.searchLocations = new Observable<Array<LocationItem>>();
     sessionStorage.setItem(
       "baseApiUrl",
@@ -36,6 +36,7 @@ export class AppComponent {
       .pipe(map((locationResponse: LocationResponse) => locationResponse.locations));
   }
 
+  totalDays: number;
   searchLocations: Observable<Array<LocationItem>>; 
   baseApiUrl: string;
   query: string;

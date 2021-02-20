@@ -176,6 +176,7 @@ class WeatherTableComponent {
         }
         this.baseApiUrl = baseUrl;
         this.isLoading = true;
+        this.totalDays = 0;
     }
     ngOnInit() {
         const context = this;
@@ -188,7 +189,7 @@ class WeatherTableComponent {
         });
     }
     getWeatherData(locations) {
-        const result = this.weatherDataService.getWeatherData(this.baseApiUrl, locations[0], new Date(), new Date());
+        const result = this.weatherDataService.getWeatherData(this.baseApiUrl, locations[0], this.totalDays, new Date(), new Date());
         const context = this;
         result
             .subscribe({
@@ -200,7 +201,7 @@ class WeatherTableComponent {
     }
 }
 WeatherTableComponent.ɵfac = function WeatherTableComponent_Factory(t) { return new (t || WeatherTableComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_weather_data_service__WEBPACK_IMPORTED_MODULE_2__["WeatherDataService"])); };
-WeatherTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WeatherTableComponent, selectors: [["app-weather-table"]], inputs: { locations: "locations" }, decls: 3, vars: 2, consts: [["class", "row", 4, "ngIf"], [4, "ngIf"], [1, "row"], ["class", "col", 4, "ngFor", "ngForOf"], [1, "col"], [3, "weather"]], template: function WeatherTableComponent_Template(rf, ctx) { if (rf & 1) {
+WeatherTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WeatherTableComponent, selectors: [["app-weather-table"]], inputs: { totalDays: "totalDays", locations: "locations" }, decls: 3, vars: 2, consts: [["class", "row", 4, "ngIf"], [4, "ngIf"], [1, "row"], ["class", "col", 4, "ngFor", "ngForOf"], [1, "col"], [3, "weather"]], template: function WeatherTableComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, WeatherTableComponent_div_1_Template, 2, 1, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, WeatherTableComponent_div_2_Template, 2, 0, "div", 1);
@@ -218,7 +219,9 @@ WeatherTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵde
                 templateUrl: './weather-table.component.html',
                 styleUrls: ['./weather-table.component.scss']
             }]
-    }], function () { return [{ type: _weather_data_service__WEBPACK_IMPORTED_MODULE_2__["WeatherDataService"] }]; }, { locations: [{
+    }], function () { return [{ type: _weather_data_service__WEBPACK_IMPORTED_MODULE_2__["WeatherDataService"] }]; }, { totalDays: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
+        }], locations: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
         }] }); })();
 
@@ -551,14 +554,20 @@ class WeatherDataService {
         this.configurationService = configurationService;
         this.getWeatherForecast = "weather";
     }
-    getWeatherData(baseUrl, locationItem, fromDate, toDate) {
+    getWeatherData(baseUrl, locationItem, totalNumberOfDays, fromDate, toDate) {
         const fromDateParameter = fromDate.toISOString();
         const toDateParameter = toDate.toISOString();
         const id = locationItem.id.toString();
+        const totalDays = totalNumberOfDays.toString();
         const headers = this
             .configurationService
             .getHttpHeaders();
-        const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromObject: { id, fromDateParameter, toDateParameter } });
+        const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromObject: {
+                id,
+                totalDays,
+                fromDateParameter,
+                toDateParameter
+            } });
         const response = this.httpClient.get(baseUrl + this.getWeatherForecast, { headers, params });
         return response;
     }
@@ -604,6 +613,7 @@ class AppComponent {
         const nativeElement = eltRef.nativeElement;
         this.baseApiUrl = nativeElement.getAttribute('baseapiurl');
         this.query = nativeElement.getAttribute('query');
+        this.totalDays = nativeElement.getAttribute('totaldays');
         this.searchLocations = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"]();
         sessionStorage.setItem("baseApiUrl", this.baseApiUrl);
     }
@@ -614,7 +624,7 @@ class AppComponent {
     }
 }
 AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_location_service__WEBPACK_IMPORTED_MODULE_3__["LocationService"])); };
-AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 4, vars: 2, consts: [[1, "mb-3"], [3, "locations"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
+AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 4, vars: 3, consts: [[1, "mb-3"], [3, "totalDays", "locations"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "h1", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
@@ -625,7 +635,7 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("Weather forecast for ", ctx.query, "");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("locations", ctx.searchLocations);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("totalDays", ctx.totalDays)("locations", ctx.searchLocations);
     } }, directives: [_weather_table_weather_table_component__WEBPACK_IMPORTED_MODULE_4__["WeatherTableComponent"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAuY29tcG9uZW50LnNjc3MifQ== */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AppComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],

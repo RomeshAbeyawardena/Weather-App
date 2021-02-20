@@ -14,6 +14,7 @@ namespace WeatherApp.Shared
                 .GetConnectionString(nameof(WeatherAppClientContextConnection));
         } 
 
+        public int TotalDaysToDisplay { get; set; }
         public string WeatherAppClientContextConnection { get; set; }
         public string DataProviderBaseUrl { get; set; }
         public string ApiKey { get; set; }

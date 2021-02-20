@@ -17,6 +17,8 @@ namespace WeatherApp.Client.Controllers
 
             return View(
                 new IndexViewModel { 
+                    TotalDaysToDisplay = applicationSettings
+                        .TotalDaysToDisplay,
                     Query = query,
                     ApiBaseUrl = applicationSettings
                         .DataProviderBaseUrl

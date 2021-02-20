@@ -16,18 +16,24 @@ export class WeatherDataService {
   getWeatherData(
     baseUrl: string,
     locationItem: LocationItem,
+    totalNumberOfDays: number,
     fromDate: Date,
     toDate: Date): Observable<WeatherResponse> {
     const fromDateParameter = fromDate.toISOString();
     const toDateParameter = toDate.toISOString();
     const id = locationItem.id.toString();
-
+    const totalDays = totalNumberOfDays.toString();
     const headers = this
       .configurationService
       .getHttpHeaders();
 
     const params = new HttpParams({ fromObject:
-      { id, fromDateParameter, toDateParameter } });
+      {
+        id,
+        totalDays,
+        fromDateParameter,
+        toDateParameter
+      } });
 
     const response = this.httpClient.get<WeatherResponse>(
       baseUrl + this.getWeatherForecast,
