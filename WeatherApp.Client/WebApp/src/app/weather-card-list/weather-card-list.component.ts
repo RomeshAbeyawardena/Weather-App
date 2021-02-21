@@ -53,7 +53,7 @@ export class WeatherCardListComponent implements OnInit {
       this.totalDays,
       new Date(),
       new Date());
-
+     
     const context = this;
 
     result

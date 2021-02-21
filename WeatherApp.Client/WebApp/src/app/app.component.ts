@@ -1,7 +1,7 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { switchMap, catchError, map } from 'rxjs/operators';
+import
+{ Component, ElementRef } from '@angular/core';
+import { Subject, Observable, of } from 'rxjs';
+import { catchError, mergeMap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Alert } from './alert/alert';
 import { ErrorResponse } from './ErrorResponse';
 import { GeoLocation } from './services/location/GeoLocation';
@@ -32,69 +32,60 @@ export class AppComponent {
     this.searchLocations = new Subject<Array<LocationItem>>();
     this.hasError = false;
     this.location = new LocationItem(0, "", "", new GeoLocation(0, 0));
-
     sessionStorage.setItem(
       "baseApiUrl",
       this.baseApiUrl);
   }
 
   ngOnInit() {
-    
-    const context = this;
-
-      this.getLocation
-        .pipe(catchError(httpError => {
-          context
-            .handleError(httpError.error);
-          return new Array(0); } ))
-        .subscribe({
-          next(locationResponse: LocationResponse) {
-            context.searchLocations.next(locationResponse.locations);
-          }
-      });
-
-
-    //this.searchLocations = this.getLocation
-    //    .pipe(
-    //      map((locationResponse: LocationResponse) => locationResponse.locations),
-    //      catchError(errorResponse => {
-    //        context.handleError(
-    //          errorResponse.error as ErrorResponse);
-    //        return new Array(0); }))
-    
     this.searchCity();
   }
 
   handleError(error: ErrorResponse): Array<LocationItem> {
-    console.log(error);
     this.alert.message = error.validationErrors[0];
     this.alert.type = "danger";
     this.hasError = true;
-
+    this.location = new LocationItem(0, "", "", new GeoLocation(0, 0));
+    this.getLocation.subscribe();
     return new Array(0);
+  }
+
+  getWeatherData(
+    context: AppComponent,
+    locationResponse: LocationResponse): Observable<LocationResponse> {
+      context.searchLocations.next(locationResponse.locations)
+      return of(locationResponse);
   }
 
   searchCity(newValue?: string) {
     if (newValue) {
       this.query = newValue;
     }
+    const context = this;
 
      this.locationService.getLocations(
       this.baseApiUrl,
-      this.query,
-      this.getLocation);
+       this.query).pipe(
+         catchError(httpError => {
+          context
+            .handleError(httpError.error);
+          return new Array(0); } ),
+         mergeMap(locationResponse => context
+           .getWeatherData(context, locationResponse)),
+         debounceTime(400),
+         distinctUntilChanged())
+       .subscribe();
     
   }    
 
   weatherDataLoaded(location: LocationItem) {
-    console.log(location);
     this.location = location;
   }
-
+  
   alert: Alert;
   displayTemperature: boolean;
   totalDays: number;
-  getLocation: Subject<LocationResponse>;
+  getLocation: Observable<LocationResponse>;
   searchLocations: Subject<Array<LocationItem>>;
   location: LocationItem;
   baseApiUrl: string;

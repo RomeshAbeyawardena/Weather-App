@@ -18,30 +18,17 @@ export class LocationService {
 
   getLocations(
     baseUrl: string,
-    query: string,
-    subject: Subject<LocationResponse>) {
+    query: string): Observable<LocationResponse> {
 
     const params = new HttpParams({ fromObject: { query } });
-
+    
     const headers = this
       .configurationService
       .getHttpHeaders();
 
-    const response = this.httpService
+    return this.httpService
       .get<LocationResponse>(baseUrl + this.getLocationUrl,
         { headers, params } );
-
-    response
-      .pipe(
-        catchError(error => {
-          subject.error(error);
-          return new Observable<LocationResponse>()
-        }))
-      .subscribe({
-        next(response: LocationResponse) {
-          subject.next(response);
-        }
-    });
   }
 
   private getLocationUrl = "location";

@@ -226,11 +226,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LocationService", function() { return LocationService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "qCKp");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
-/* harmony import */ var _configuration_configuration_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../configuration/configuration.service */ "rHPJ");
-
-
+/* harmony import */ var _configuration_configuration_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../configuration/configuration.service */ "rHPJ");
 
 
 
@@ -242,33 +238,23 @@ class LocationService {
         this.configurationService = configurationService;
         this.getLocationUrl = "location";
     }
-    getLocations(baseUrl, query, subject) {
+    getLocations(baseUrl, query) {
         const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromObject: { query } });
         const headers = this
             .configurationService
             .getHttpHeaders();
-        const response = this.httpService
+        return this.httpService
             .get(baseUrl + this.getLocationUrl, { headers, params });
-        response
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(error => {
-            subject.error(error);
-            return new rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"]();
-        }))
-            .subscribe({
-            next(response) {
-                subject.next(response);
-            }
-        });
     }
 }
-LocationService.ɵfac = function LocationService_Factory(t) { return new (t || LocationService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_configuration_configuration_service__WEBPACK_IMPORTED_MODULE_4__["ConfigurationService"])); };
+LocationService.ɵfac = function LocationService_Factory(t) { return new (t || LocationService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_configuration_configuration_service__WEBPACK_IMPORTED_MODULE_2__["ConfigurationService"])); };
 LocationService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: LocationService, factory: LocationService.ɵfac, providedIn: 'root' });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](LocationService, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
         args: [{
                 providedIn: 'root'
             }]
-    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }, { type: _configuration_configuration_service__WEBPACK_IMPORTED_MODULE_4__["ConfigurationService"] }]; }, null); })();
+    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }, { type: _configuration_configuration_service__WEBPACK_IMPORTED_MODULE_2__["ConfigurationService"] }]; }, null); })();
 
 
 /***/ }),
@@ -678,42 +664,34 @@ class AppComponent {
         sessionStorage.setItem("baseApiUrl", this.baseApiUrl);
     }
     ngOnInit() {
-        const context = this;
-        this.getLocation
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(httpError => {
-            context
-                .handleError(httpError.error);
-            return new Array(0);
-        }))
-            .subscribe({
-            next(locationResponse) {
-                context.searchLocations.next(locationResponse.locations);
-            }
-        });
-        //this.searchLocations = this.getLocation
-        //    .pipe(
-        //      map((locationResponse: LocationResponse) => locationResponse.locations),
-        //      catchError(errorResponse => {
-        //        context.handleError(
-        //          errorResponse.error as ErrorResponse);
-        //        return new Array(0); }))
         this.searchCity();
     }
     handleError(error) {
-        console.log(error);
         this.alert.message = error.validationErrors[0];
         this.alert.type = "danger";
         this.hasError = true;
+        this.location = new _services_location_location_item__WEBPACK_IMPORTED_MODULE_5__["LocationItem"](0, "", "", new _services_location_GeoLocation__WEBPACK_IMPORTED_MODULE_4__["GeoLocation"](0, 0));
+        this.getLocation.subscribe();
         return new Array(0);
+    }
+    getWeatherData(context, locationResponse) {
+        context.searchLocations.next(locationResponse.locations);
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(locationResponse);
     }
     searchCity(newValue) {
         if (newValue) {
             this.query = newValue;
         }
-        this.locationService.getLocations(this.baseApiUrl, this.query, this.getLocation);
+        const context = this;
+        this.locationService.getLocations(this.baseApiUrl, this.query).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(httpError => {
+            context
+                .handleError(httpError.error);
+            return new Array(0);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeMap"])(locationResponse => context
+            .getWeatherData(context, locationResponse)), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["debounceTime"])(400), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["distinctUntilChanged"])())
+            .subscribe();
     }
     weatherDataLoaded(location) {
-        console.log(location);
         this.location = location;
     }
 }
