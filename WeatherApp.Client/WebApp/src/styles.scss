@@ -1,2 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/scss/bootstrap";
+
+.container-fluid {
+  .header-logo {
+    p, img {
+      display: inline-block; 
+      margin-right: 0.5rem;
+    }
+
+    img {
+        width:32px;
+    }
+
+    p {
+      margin: 0;
+      padding: 0;
+      vertical-align: middle;
+    }
+  }
+}

@@ -7,13 +7,13 @@ import { faSearch, IconDefinition } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./location-search.component.scss']
 })
 export class LocationSearchComponent implements OnInit {
-
+   
   constructor() {
     this.value = "";
     this.searchIcon = faSearch;
     this.searchCity = new EventEmitter<string>();
   }
-
+   
   searchLocation() {
     this.searchCity.emit(
       this.value);

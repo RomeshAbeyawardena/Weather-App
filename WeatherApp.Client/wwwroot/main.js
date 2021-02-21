@@ -709,7 +709,7 @@ class AppComponent {
     }
 }
 AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_location_location_service__WEBPACK_IMPORTED_MODULE_7__["LocationService"])); };
-AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 9, vars: 7, consts: [[3, "model"], [1, "row"], [1, "col-9"], ["class", "mb-3", 4, "ngIf"], [1, "col-3"], [1, "float-right"], [3, "value", "searchCity"], [3, "displayTemperature", "hasError", "totalDays", "locations", "weatherDataLoaded"], [1, "mb-3"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
+AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 9, vars: 7, consts: [[3, "model"], [1, "row"], [1, "col-12", "col-md-9"], ["class", "mb-3", 4, "ngIf"], [1, "col-12", "col-md-3"], [1, "float-right", "mb-2"], [3, "value", "searchCity"], [3, "displayTemperature", "hasError", "totalDays", "locations", "weatherDataLoaded"], [1, "mb-3"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "app-alert", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 1);
@@ -999,7 +999,7 @@ class WeatherCardListComponent {
     }
 }
 WeatherCardListComponent.ɵfac = function WeatherCardListComponent_Factory(t) { return new (t || WeatherCardListComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_weather_data_weather_data_service__WEBPACK_IMPORTED_MODULE_2__["WeatherDataService"])); };
-WeatherCardListComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WeatherCardListComponent, selectors: [["app-weather-card-list"]], inputs: { hasError: "hasError", displayTemperature: "displayTemperature", totalDays: "totalDays", locations: "locations" }, outputs: { weatherDataLoaded: "weatherDataLoaded" }, decls: 4, vars: 2, consts: [["class", "row row-cols-sm-3 row-cols-lg-5", 4, "ngIf"], [3, "display"], [1, "row", "row-cols-sm-3", "row-cols-lg-5"], ["class", "col", 4, "ngFor", "ngForOf"], [1, "col"], [3, "weather", "displayTemperature"]], template: function WeatherCardListComponent_Template(rf, ctx) { if (rf & 1) {
+WeatherCardListComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WeatherCardListComponent, selectors: [["app-weather-card-list"]], inputs: { hasError: "hasError", displayTemperature: "displayTemperature", totalDays: "totalDays", locations: "locations" }, outputs: { weatherDataLoaded: "weatherDataLoaded" }, decls: 4, vars: 2, consts: [["class", "row row-cols-sm-2 row-cols-lg-5", 4, "ngIf"], [3, "display"], [1, "row", "row-cols-sm-2", "row-cols-lg-5"], ["class", "col", 4, "ngFor", "ngForOf"], [1, "col"], [3, "weather", "displayTemperature"]], template: function WeatherCardListComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, WeatherCardListComponent_div_1_Template, 2, 1, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div");
