@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Primitives;
 using System.Collections.Generic;
 
 namespace WeatherApp.Shared

@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace WeatherApp.Shared.Models
+﻿namespace WeatherApp.Shared.Models
 {
     public class Location
     {

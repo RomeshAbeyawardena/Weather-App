@@ -3,17 +3,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using WeatherApp.Shared;
 using WeatherApp.Shared.Constants;
 
-namespace WeatherApp.Server.Features.ApiKey 
+namespace WeatherApp.Server.Features.ApiKey
 {
     public class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthenticationOptions>
     {

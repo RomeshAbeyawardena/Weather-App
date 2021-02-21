@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
 using RestSharp;
-using RestSharp.Serialization.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using WeatherApp.Server.Base;
-using WeatherApp.Shared;
 using WeatherApp.Shared.Constants;
 using WeatherApp.Shared.Contracts.Providers;
 using Models = WeatherApp.Shared.Models;

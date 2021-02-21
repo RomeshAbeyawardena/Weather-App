@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 using WeatherApp.Client.Middleware;
 using WeatherApp.Shared;
-using WeatherApp.Shared.Models;
 
 namespace WeatherApp.Client
 {
