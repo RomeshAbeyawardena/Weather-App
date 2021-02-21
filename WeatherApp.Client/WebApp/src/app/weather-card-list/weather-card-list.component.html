@@ -1,5 +1,5 @@
 <div>
-  <div *ngIf="!isLoading" class="row">
+  <div *ngIf="!isLoading" class="row row-cols-sm-3 row-cols-lg-5">
     <div class="col" *ngFor="let weatherDataItem of weatherData">
       <app-weather-card [weather]="weatherDataItem" [displayTemperature]="displayTemperature"></app-weather-card>
     </div>
