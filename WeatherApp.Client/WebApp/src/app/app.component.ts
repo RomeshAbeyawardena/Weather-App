@@ -1,13 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { switchMap, catchError, map } from 'rxjs/operators';
 import { Alert } from './alert/alert';
 import { ErrorResponse } from './ErrorResponse';
+import { GeoLocation } from './services/location/GeoLocation';
 import { LocationItem } from './services/location/location-item';
 import { LocationResponse } from './services/location/location-response';
 import { LocationService } from './services/location/location.service';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -29,8 +29,9 @@ export class AppComponent {
     
     this.displayTemperature = value === 'displayTemperature'
     this.alert = new Alert("", "");
-    this.searchLocations = new Observable<Array<LocationItem>>();
+    this.searchLocations = new Subject<Array<LocationItem>>();
     this.hasError = false;
+    this.location = new LocationItem(0, "", "", new GeoLocation(0, 0));
 
     sessionStorage.setItem(
       "baseApiUrl",
@@ -42,18 +43,24 @@ export class AppComponent {
     const context = this;
 
       this.getLocation
-        .subscribe({ error(error) {
-          console.log(error);
-      }});
+        .pipe(catchError(httpError => {
+          context
+            .handleError(httpError.error);
+          return new Array(0); } ))
+        .subscribe({
+          next(locationResponse: LocationResponse) {
+            context.searchLocations.next(locationResponse.locations);
+          }
+      });
 
 
-    this.searchLocations = this.getLocation
-        .pipe(
-          map((locationResponse: LocationResponse) => locationResponse.locations),
-          catchError(errorResponse => {
-            context.handleError(
-              errorResponse.error as ErrorResponse);
-            return new Array(0); }))
+    //this.searchLocations = this.getLocation
+    //    .pipe(
+    //      map((locationResponse: LocationResponse) => locationResponse.locations),
+    //      catchError(errorResponse => {
+    //        context.handleError(
+    //          errorResponse.error as ErrorResponse);
+    //        return new Array(0); }))
     
     this.searchCity();
   }
@@ -72,19 +79,24 @@ export class AppComponent {
       this.query = newValue;
     }
 
-     this.locationService.getLocation(
+     this.locationService.getLocations(
       this.baseApiUrl,
       this.query,
       this.getLocation);
     
   }    
-      
+
+  weatherDataLoaded(location: LocationItem) {
+    console.log(location);
+    this.location = location;
+  }
 
   alert: Alert;
   displayTemperature: boolean;
   totalDays: number;
   getLocation: Subject<LocationResponse>;
-  searchLocations: Observable<Array<LocationItem>>; 
+  searchLocations: Subject<Array<LocationItem>>;
+  location: LocationItem;
   baseApiUrl: string;
   query: string;
   hasError: boolean;

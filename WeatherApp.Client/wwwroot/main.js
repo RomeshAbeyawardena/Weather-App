@@ -194,6 +194,26 @@ const environment = {
 
 /***/ }),
 
+/***/ "Ct58":
+/*!**************************************************!*\
+  !*** ./src/app/services/location/GeoLocation.ts ***!
+  \**************************************************/
+/*! exports provided: GeoLocation */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GeoLocation", function() { return GeoLocation; });
+class GeoLocation {
+    constructor(latitude, longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+}
+
+
+/***/ }),
+
 /***/ "P12i":
 /*!*******************************************************!*\
   !*** ./src/app/services/location/location.service.ts ***!
@@ -206,7 +226,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LocationService", function() { return LocationService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
-/* harmony import */ var _configuration_configuration_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../configuration/configuration.service */ "rHPJ");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "qCKp");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
+/* harmony import */ var _configuration_configuration_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../configuration/configuration.service */ "rHPJ");
+
+
 
 
 
@@ -218,28 +242,55 @@ class LocationService {
         this.configurationService = configurationService;
         this.getLocationUrl = "location";
     }
-    getLocation(baseUrl, query, subject) {
+    getLocations(baseUrl, query, subject) {
         const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromObject: { query } });
         const headers = this
             .configurationService
             .getHttpHeaders();
         const response = this.httpService
             .get(baseUrl + this.getLocationUrl, { headers, params });
-        response.subscribe({
+        response
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(error => {
+            subject.error(error);
+            return new rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"]();
+        }))
+            .subscribe({
             next(response) {
                 subject.next(response);
             }
         });
     }
 }
-LocationService.ɵfac = function LocationService_Factory(t) { return new (t || LocationService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_configuration_configuration_service__WEBPACK_IMPORTED_MODULE_2__["ConfigurationService"])); };
+LocationService.ɵfac = function LocationService_Factory(t) { return new (t || LocationService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_configuration_configuration_service__WEBPACK_IMPORTED_MODULE_4__["ConfigurationService"])); };
 LocationService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: LocationService, factory: LocationService.ɵfac, providedIn: 'root' });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](LocationService, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
         args: [{
                 providedIn: 'root'
             }]
-    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }, { type: _configuration_configuration_service__WEBPACK_IMPORTED_MODULE_2__["ConfigurationService"] }]; }, null); })();
+    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }, { type: _configuration_configuration_service__WEBPACK_IMPORTED_MODULE_4__["ConfigurationService"] }]; }, null); })();
+
+
+/***/ }),
+
+/***/ "P7vr":
+/*!****************************************************!*\
+  !*** ./src/app/services/location/location-item.ts ***!
+  \****************************************************/
+/*! exports provided: LocationItem */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LocationItem", function() { return LocationItem; });
+class LocationItem {
+    constructor(id, name, type, geoLocation) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.geoLocation = geoLocation;
+    }
+}
 
 
 /***/ }),
@@ -580,10 +631,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "qCKp");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
 /* harmony import */ var _alert_alert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alert/alert */ "SLR5");
-/* harmony import */ var _services_location_location_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./services/location/location.service */ "P12i");
-/* harmony import */ var _alert_alert_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./alert/alert.component */ "4hj4");
-/* harmony import */ var _location_search_location_search_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./location-search/location-search.component */ "ZftL");
-/* harmony import */ var _weather_card_list_weather_card_list_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./weather-card-list/weather-card-list.component */ "ayS6");
+/* harmony import */ var _services_location_GeoLocation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./services/location/GeoLocation */ "Ct58");
+/* harmony import */ var _services_location_location_item__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./services/location/location-item */ "P7vr");
+/* harmony import */ var _services_location_location_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./services/location/location.service */ "P12i");
+/* harmony import */ var _alert_alert_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./alert/alert.component */ "4hj4");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _location_search_location_search_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./location-search/location-search.component */ "ZftL");
+/* harmony import */ var _weather_card_list_weather_card_list_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./weather-card-list/weather-card-list.component */ "ayS6");
 
 
 
@@ -594,6 +648,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+function AppComponent_h1_4_Template(rf, ctx) { if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "h1", 8);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+} if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("Weather forecast for ", ctx_r0.location.name, "");
+} }
 class AppComponent {
     constructor(eltRef, locationService) {
         this.eltRef = eltRef;
@@ -607,21 +672,31 @@ class AppComponent {
         const value = nativeElement.getAttribute('displaytemperature');
         this.displayTemperature = value === 'displayTemperature';
         this.alert = new _alert_alert__WEBPACK_IMPORTED_MODULE_3__["Alert"]("", "");
-        this.searchLocations = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"]();
+        this.searchLocations = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
         this.hasError = false;
+        this.location = new _services_location_location_item__WEBPACK_IMPORTED_MODULE_5__["LocationItem"](0, "", "", new _services_location_GeoLocation__WEBPACK_IMPORTED_MODULE_4__["GeoLocation"](0, 0));
         sessionStorage.setItem("baseApiUrl", this.baseApiUrl);
     }
     ngOnInit() {
         const context = this;
         this.getLocation
-            .subscribe({ error(error) {
-                console.log(error);
-            } });
-        this.searchLocations = this.getLocation
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])((locationResponse) => locationResponse.locations), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(errorResponse => {
-            context.handleError(errorResponse.error);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(httpError => {
+            context
+                .handleError(httpError.error);
             return new Array(0);
-        }));
+        }))
+            .subscribe({
+            next(locationResponse) {
+                context.searchLocations.next(locationResponse.locations);
+            }
+        });
+        //this.searchLocations = this.getLocation
+        //    .pipe(
+        //      map((locationResponse: LocationResponse) => locationResponse.locations),
+        //      catchError(errorResponse => {
+        //        context.handleError(
+        //          errorResponse.error as ErrorResponse);
+        //        return new Array(0); }))
         this.searchCity();
     }
     handleError(error) {
@@ -635,39 +710,43 @@ class AppComponent {
         if (newValue) {
             this.query = newValue;
         }
-        this.locationService.getLocation(this.baseApiUrl, this.query, this.getLocation);
+        this.locationService.getLocations(this.baseApiUrl, this.query, this.getLocation);
+    }
+    weatherDataLoaded(location) {
+        console.log(location);
+        this.location = location;
     }
 }
-AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_location_location_service__WEBPACK_IMPORTED_MODULE_4__["LocationService"])); };
-AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 10, vars: 7, consts: [[3, "model"], [1, "row"], [1, "col-9"], [1, "mb-3"], [1, "col-3"], [1, "float-right"], [3, "value", "searchCity"], [3, "displayTemperature", "hasError", "totalDays", "locations"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
+AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_location_location_service__WEBPACK_IMPORTED_MODULE_6__["LocationService"])); };
+AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 9, vars: 7, consts: [[3, "model"], [1, "row"], [1, "col-9"], ["class", "mb-3", 4, "ngIf"], [1, "col-3"], [1, "float-right"], [3, "value", "searchCity"], [3, "displayTemperature", "hasError", "totalDays", "locations", "weatherDataLoaded"], [1, "mb-3"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "app-alert", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "div", 2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "h1", 3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](4, AppComponent_h1_4_Template, 2, 1, "h1", 3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "div", 4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "div", 5);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "app-location-search", 6);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("searchCity", function AppComponent_Template_app_location_search_searchCity_8_listener($event) { return ctx.searchCity($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "div", 4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "div", 5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "app-location-search", 6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("searchCity", function AppComponent_Template_app_location_search_searchCity_7_listener($event) { return ctx.searchCity($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](9, "app-weather-card-list", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "app-weather-card-list", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("weatherDataLoaded", function AppComponent_Template_app_weather_card_list_weatherDataLoaded_8_listener($event) { return ctx.weatherDataLoaded($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("model", ctx.alert);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("Weather forecast for ", ctx.query, "");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.location.name);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("value", ctx.query);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("displayTemperature", ctx.displayTemperature)("hasError", ctx.hasError)("totalDays", ctx.totalDays)("locations", ctx.searchLocations);
-    } }, directives: [_alert_alert_component__WEBPACK_IMPORTED_MODULE_5__["ErrorAlertComponent"], _location_search_location_search_component__WEBPACK_IMPORTED_MODULE_6__["LocationSearchComponent"], _weather_card_list_weather_card_list_component__WEBPACK_IMPORTED_MODULE_7__["WeatherCardListComponent"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAuY29tcG9uZW50LnNjc3MifQ== */"] });
+    } }, directives: [_alert_alert_component__WEBPACK_IMPORTED_MODULE_7__["ErrorAlertComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_8__["NgIf"], _location_search_location_search_component__WEBPACK_IMPORTED_MODULE_9__["LocationSearchComponent"], _weather_card_list_weather_card_list_component__WEBPACK_IMPORTED_MODULE_10__["WeatherCardListComponent"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAuY29tcG9uZW50LnNjc3MifQ== */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AppComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -675,7 +754,7 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
                 templateUrl: './app.component.html',
                 styleUrls: ['./app.component.scss']
             }]
-    }], function () { return [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"] }, { type: _services_location_location_service__WEBPACK_IMPORTED_MODULE_4__["LocationService"] }]; }, null); })();
+    }], function () { return [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"] }, { type: _services_location_location_service__WEBPACK_IMPORTED_MODULE_6__["LocationService"] }]; }, null); })();
 
 
 /***/ }),
@@ -872,7 +951,7 @@ class WeatherCardListComponent {
     constructor(weatherDataService) {
         this.weatherDataService = weatherDataService;
         this.weatherData = new Array();
-        this.locations = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"]();
+        this.locations = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
         const baseUrl = sessionStorage
             .getItem("baseApiUrl");
         if (baseUrl === null) {
@@ -883,6 +962,7 @@ class WeatherCardListComponent {
         this.totalDays = 0;
         this.displayTemperature = false;
         this.hasError = false;
+        this.weatherDataLoaded = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
     }
     ngOnInit() {
         const context = this;
@@ -896,13 +976,15 @@ class WeatherCardListComponent {
         });
     }
     getWeatherData(locations) {
-        const result = this.weatherDataService.getWeatherData(this.baseApiUrl, locations[0], this.totalDays, new Date(), new Date());
+        const firstLocation = locations[0];
+        const result = this.weatherDataService.getWeatherData(this.baseApiUrl, firstLocation, this.totalDays, new Date(), new Date());
         const context = this;
         result
             .subscribe({
             next(weatherResponse) {
                 context.weatherData = weatherResponse.weatherForecast;
                 context.isLoading = false;
+                context.weatherDataLoaded.emit(firstLocation);
             },
             error(errorResponse) {
                 console.log("WeatherTableComponent", errorResponse);
@@ -912,7 +994,7 @@ class WeatherCardListComponent {
     }
 }
 WeatherCardListComponent.ɵfac = function WeatherCardListComponent_Factory(t) { return new (t || WeatherCardListComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_weather_data_weather_data_service__WEBPACK_IMPORTED_MODULE_2__["WeatherDataService"])); };
-WeatherCardListComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WeatherCardListComponent, selectors: [["app-weather-card-list"]], inputs: { hasError: "hasError", displayTemperature: "displayTemperature", totalDays: "totalDays", locations: "locations" }, decls: 4, vars: 2, consts: [["class", "row", 4, "ngIf"], [3, "display"], [1, "row"], ["class", "col", 4, "ngFor", "ngForOf"], [1, "col"], [3, "weather", "displayTemperature"]], template: function WeatherCardListComponent_Template(rf, ctx) { if (rf & 1) {
+WeatherCardListComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WeatherCardListComponent, selectors: [["app-weather-card-list"]], inputs: { hasError: "hasError", displayTemperature: "displayTemperature", totalDays: "totalDays", locations: "locations" }, outputs: { weatherDataLoaded: "weatherDataLoaded" }, decls: 4, vars: 2, consts: [["class", "row", 4, "ngIf"], [3, "display"], [1, "row"], ["class", "col", 4, "ngFor", "ngForOf"], [1, "col"], [3, "weather", "displayTemperature"]], template: function WeatherCardListComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, WeatherCardListComponent_div_1_Template, 2, 1, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div");
@@ -932,7 +1014,9 @@ WeatherCardListComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵ�
                 templateUrl: './weather-card-list.component.html',
                 styleUrls: ['./weather-card-list.component.scss']
             }]
-    }], function () { return [{ type: _services_weather_data_weather_data_service__WEBPACK_IMPORTED_MODULE_2__["WeatherDataService"] }]; }, { hasError: [{
+    }], function () { return [{ type: _services_weather_data_weather_data_service__WEBPACK_IMPORTED_MODULE_2__["WeatherDataService"] }]; }, { weatherDataLoaded: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"]
+        }], hasError: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
         }], displayTemperature: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]

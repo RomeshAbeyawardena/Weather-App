@@ -2,7 +2,7 @@
   <app-alert [model]="alert"></app-alert>
   <div class="row">
     <div class="col-9">
-      <h1 class="mb-3">Weather forecast for {{ query }}</h1>
+      <h1 class="mb-3" *ngIf="location.name">Weather forecast for {{ location.name }}</h1>
     </div>
     <div class="col-3">
       <div class="float-right">
@@ -13,6 +13,7 @@
   </div>
   
   <app-weather-card-list [displayTemperature]="displayTemperature"
+                     (weatherDataLoaded)="weatherDataLoaded($event)"
                      [hasError]="hasError"
                      [totalDays]="totalDays"
                      [locations]="searchLocations"></app-weather-card-list>

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { LocationResponse } from './location-response';
-import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { ConfigurationService } from '../configuration/configuration.service';
-import { Subject } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class LocationService {
     
   }
 
-  getLocation(
+  getLocations(
     baseUrl: string,
     query: string,
     subject: Subject<LocationResponse>) {
@@ -30,10 +31,17 @@ export class LocationService {
       .get<LocationResponse>(baseUrl + this.getLocationUrl,
         { headers, params } );
 
-    response.subscribe({
-      next(response: LocationResponse) {
-        subject.next(response);
-      }});
+    response
+      .pipe(
+        catchError(error => {
+          subject.error(error);
+          return new Observable<LocationResponse>()
+        }))
+      .subscribe({
+        next(response: LocationResponse) {
+          subject.next(response);
+        }
+    });
   }
 
   private getLocationUrl = "location";
