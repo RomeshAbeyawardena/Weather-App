@@ -62,7 +62,7 @@ export class AppComponent {
       this.query = newValue;
     }
     const context = this;
-
+    this.hasError = false; 
      this.locationService.getLocations(
       this.baseApiUrl,
        this.query).pipe(
