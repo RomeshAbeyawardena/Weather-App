@@ -14,7 +14,6 @@ export class WeatherDataService {
     private configurationService: ConfigurationService) { }
 
   getWeatherData(
-    baseUrl: string,
     locationItem: LocationItem,
     totalNumberOfDays: number,
     fromDate: Date,
@@ -23,9 +22,17 @@ export class WeatherDataService {
     const toDateParameter = toDate.toISOString();
     const id = locationItem.id.toString();
     const totalDays = totalNumberOfDays.toString();
+
+    const configurationData = this.configurationService
+      .getConfigurationData();
+
+    const requestUrl = this.configurationService.getServiceUrl(
+      configurationData,
+      this.getWeatherForecast);
+
     const headers = this
       .configurationService
-      .getHttpHeaders();
+      .getHttpHeaders(configurationData);
 
     const params = new HttpParams({ fromObject:
       {
@@ -33,10 +40,11 @@ export class WeatherDataService {
         totalDays,
         fromDateParameter,
         toDateParameter
-      } });
+      }
+    });
 
     const response = this.httpClient.get<WeatherResponse>(
-      baseUrl + this.getWeatherForecast,
+       requestUrl,
       { headers, params } );
 
     return response;

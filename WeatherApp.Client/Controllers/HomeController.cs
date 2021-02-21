@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WeatherApp.Client.ViewModels.Home;
 using WeatherApp.Shared;
+using WeatherApp.Shared.Extensions;
 
 namespace WeatherApp.Client.Controllers
 {
@@ -19,11 +20,15 @@ namespace WeatherApp.Client.Controllers
 
             return View(
                 new IndexViewModel { 
+                    ApiKey = applicationSettings
+                        .ApiKey
+                        .EncodeToBase64(),
                     TotalDaysToDisplay = applicationSettings
                         .TotalDaysToDisplay,
                     Query = query,
                     ApiBaseUrl = applicationSettings
-                        .DataProviderBaseUrl,
+                        .DataProviderBaseUrl
+                        .EncodeToBase64(),
                     DisplayTemperature = displayTemperature
                 });
         }

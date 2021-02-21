@@ -23,7 +23,6 @@ export class WeatherCardListComponent implements OnInit {
       throw "baseUrl not available"
     }
 
-    this.baseApiUrl = baseUrl;
     this.isLoading = true;
     this.totalDays = 0;
     this.displayTemperature = false;
@@ -48,7 +47,6 @@ export class WeatherCardListComponent implements OnInit {
     const firstLocation = locations[0];
 
     const result = this.weatherDataService.getWeatherData(
-      this.baseApiUrl,
       firstLocation,
       this.totalDays,
       new Date(),
@@ -68,7 +66,6 @@ export class WeatherCardListComponent implements OnInit {
         } });
   }
 
-  private baseApiUrl: string;
   isLoading: boolean;
   weatherData: Array<WeatherData>;
   @Output() weatherDataLoaded: EventEmitter<LocationItem>;

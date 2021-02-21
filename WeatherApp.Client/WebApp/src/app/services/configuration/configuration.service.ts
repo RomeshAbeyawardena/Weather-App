@@ -1,5 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ConfigurationData } from './configuration-data';
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +8,32 @@ import { Injectable } from '@angular/core';
 export class ConfigurationService {
 
   constructor() { }
-  getHttpHeaders(): HttpHeaders {
+  getHttpHeaders(
+    configurationData: ConfigurationData): HttpHeaders {
     return new HttpHeaders()
-      .set("x-api-key", "YzgzMzgyNjAtOTg3NC00ZTA4LWFiZDAtN2E3ZWZlM2Y2OTY4");
+      .set("x-api-key", configurationData.apiKey);
+  }
+  getServiceUrl(
+    configurationData: ConfigurationData,
+    url: string) {
+    return configurationData.baseUrl + url;
+  }
+  getConfigurationData(): ConfigurationData {
+    const baseUrl = sessionStorage.getItem(
+      "baseApiUrl");
+
+    const apiKey = sessionStorage.getItem(
+      "apiKey");
+
+    if (!baseUrl) {
+      throw 'BaseUrl not specified'
+    }
+
+    if (!apiKey) {
+      throw 'Api Key not specified'
+    }
+    return new ConfigurationData(
+      atob(baseUrl),
+      atob(apiKey));
   }
 }

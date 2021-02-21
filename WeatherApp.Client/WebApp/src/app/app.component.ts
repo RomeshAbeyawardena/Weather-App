@@ -22,19 +22,26 @@ export class AppComponent {
     private locationService: LocationService) {
     const nativeElement = eltRef.nativeElement;
     this.getLocation = new Subject<LocationResponse>(); 
-    this.baseApiUrl = nativeElement.getAttribute('baseapiurl');
+    const baseApiUrl = nativeElement.getAttribute('baseapiurl');
     this.query = nativeElement.getAttribute('query');
     this.totalDays = nativeElement.getAttribute('totaldays');
-    const value =  nativeElement.getAttribute('displaytemperature'); 
-    
+    const value =  nativeElement.getAttribute('displaytemperature');
+
+    const apiKey =  nativeElement.getAttribute('key');
+
     this.displayTemperature = value === 'displayTemperature'
     this.alert = new Alert("", "");
     this.searchLocations = new Subject<Array<LocationItem>>();
     this.hasError = false;
     this.location = new LocationItem(0, "", "", new GeoLocation(0, 0));
+
     sessionStorage.setItem(
       "baseApiUrl",
-      this.baseApiUrl);
+      baseApiUrl);
+
+    sessionStorage.setItem(
+      "apiKey",
+      apiKey);
   }
 
   ngOnInit() {
@@ -63,9 +70,9 @@ export class AppComponent {
     }
     const context = this;
     this.hasError = false; 
-     this.locationService.getLocations(
-      this.baseApiUrl,
-       this.query).pipe(
+     this.locationService
+       .getLocations(
+          this.query).pipe(
          catchError(httpError => {
           context
             .handleError(httpError.error);
@@ -88,7 +95,6 @@ export class AppComponent {
   getLocation: Observable<LocationResponse>;
   searchLocations: Subject<Array<LocationItem>>;
   location: LocationItem;
-  baseApiUrl: string;
   query: string;
   hasError: boolean;
 }

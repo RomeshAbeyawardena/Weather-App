@@ -60,21 +60,25 @@ class WeatherDataService {
         this.configurationService = configurationService;
         this.getWeatherForecast = "weather";
     }
-    getWeatherData(baseUrl, locationItem, totalNumberOfDays, fromDate, toDate) {
+    getWeatherData(locationItem, totalNumberOfDays, fromDate, toDate) {
         const fromDateParameter = fromDate.toISOString();
         const toDateParameter = toDate.toISOString();
         const id = locationItem.id.toString();
         const totalDays = totalNumberOfDays.toString();
+        const configurationData = this.configurationService
+            .getConfigurationData();
+        const requestUrl = this.configurationService.getServiceUrl(configurationData, this.getWeatherForecast);
         const headers = this
             .configurationService
-            .getHttpHeaders();
+            .getHttpHeaders(configurationData);
         const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromObject: {
                 id,
                 totalDays,
                 fromDateParameter,
                 toDateParameter
-            } });
-        const response = this.httpClient.get(baseUrl + this.getWeatherForecast, { headers, params });
+            }
+        });
+        const response = this.httpClient.get(requestUrl, { headers, params });
         return response;
     }
 }
@@ -238,13 +242,16 @@ class LocationService {
         this.configurationService = configurationService;
         this.getLocationUrl = "location";
     }
-    getLocations(baseUrl, query) {
+    getLocations(query) {
+        const configurationData = this.configurationService
+            .getConfigurationData();
+        const requestUrl = this.configurationService
+            .getServiceUrl(configurationData, this.getLocationUrl);
+        const headers = this.configurationService
+            .getHttpHeaders(configurationData);
         const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromObject: { query } });
-        const headers = this
-            .configurationService
-            .getHttpHeaders();
         return this.httpService
-            .get(baseUrl + this.getLocationUrl, { headers, params });
+            .get(requestUrl, { headers, params });
     }
 }
 LocationService.ɵfac = function LocationService_Factory(t) { return new (t || LocationService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_configuration_configuration_service__WEBPACK_IMPORTED_MODULE_2__["ConfigurationService"])); };
@@ -652,16 +659,18 @@ class AppComponent {
         this.title = 'Weather App';
         const nativeElement = eltRef.nativeElement;
         this.getLocation = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
-        this.baseApiUrl = nativeElement.getAttribute('baseapiurl');
+        const baseApiUrl = nativeElement.getAttribute('baseapiurl');
         this.query = nativeElement.getAttribute('query');
         this.totalDays = nativeElement.getAttribute('totaldays');
         const value = nativeElement.getAttribute('displaytemperature');
+        const apiKey = nativeElement.getAttribute('key');
         this.displayTemperature = value === 'displayTemperature';
         this.alert = new _alert_alert__WEBPACK_IMPORTED_MODULE_3__["Alert"]("", "");
         this.searchLocations = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
         this.hasError = false;
         this.location = new _services_location_location_item__WEBPACK_IMPORTED_MODULE_5__["LocationItem"](0, "", "", new _services_location_GeoLocation__WEBPACK_IMPORTED_MODULE_4__["GeoLocation"](0, 0));
-        sessionStorage.setItem("baseApiUrl", this.baseApiUrl);
+        sessionStorage.setItem("baseApiUrl", baseApiUrl);
+        sessionStorage.setItem("apiKey", apiKey);
     }
     ngOnInit() {
         this.searchCity();
@@ -684,7 +693,8 @@ class AppComponent {
         }
         const context = this;
         this.hasError = false;
-        this.locationService.getLocations(this.baseApiUrl, this.query).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(httpError => {
+        this.locationService
+            .getLocations(this.query).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(httpError => {
             context
                 .handleError(httpError.error);
             return new Array(0);
@@ -814,6 +824,26 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
 
 /***/ }),
 
+/***/ "Zexd":
+/*!**************************************************************!*\
+  !*** ./src/app/services/configuration/configuration-data.ts ***!
+  \**************************************************************/
+/*! exports provided: ConfigurationData */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConfigurationData", function() { return ConfigurationData; });
+class ConfigurationData {
+    constructor(baseUrl, apiKey) {
+        this.baseUrl = baseUrl;
+        this.apiKey = apiKey;
+    }
+}
+
+
+/***/ }),
+
 /***/ "ZftL":
 /*!**************************************************************!*\
   !*** ./src/app/location-search/location-search.component.ts ***!
@@ -936,7 +966,6 @@ class WeatherCardListComponent {
         if (baseUrl === null) {
             throw "baseUrl not available";
         }
-        this.baseApiUrl = baseUrl;
         this.isLoading = true;
         this.totalDays = 0;
         this.displayTemperature = false;
@@ -956,7 +985,7 @@ class WeatherCardListComponent {
     }
     getWeatherData(locations) {
         const firstLocation = locations[0];
-        const result = this.weatherDataService.getWeatherData(this.baseApiUrl, firstLocation, this.totalDays, new Date(), new Date());
+        const result = this.weatherDataService.getWeatherData(firstLocation, this.totalDays, new Date(), new Date());
         const context = this;
         result
             .subscribe({
@@ -1162,14 +1191,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConfigurationService", function() { return ConfigurationService; });
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _configuration_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./configuration-data */ "Zexd");
+
 
 
 
 class ConfigurationService {
     constructor() { }
-    getHttpHeaders() {
+    getHttpHeaders(configurationData) {
         return new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpHeaders"]()
-            .set("x-api-key", "YzgzMzgyNjAtOTg3NC00ZTA4LWFiZDAtN2E3ZWZlM2Y2OTY4");
+            .set("x-api-key", configurationData.apiKey);
+    }
+    getServiceUrl(configurationData, url) {
+        return configurationData.baseUrl + url;
+    }
+    getConfigurationData() {
+        const baseUrl = sessionStorage.getItem("baseApiUrl");
+        const apiKey = sessionStorage.getItem("apiKey");
+        if (!baseUrl) {
+            throw 'BaseUrl not specified';
+        }
+        if (!apiKey) {
+            throw 'Api Key not specified';
+        }
+        return new _configuration_data__WEBPACK_IMPORTED_MODULE_2__["ConfigurationData"](atob(baseUrl), atob(apiKey));
     }
 }
 ConfigurationService.ɵfac = function ConfigurationService_Factory(t) { return new (t || ConfigurationService)(); };
