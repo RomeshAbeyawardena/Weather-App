@@ -1,0 +1,15 @@
+<div class="row mt-2">
+  <div class="col-9 pr-1">
+    <div class="text-right">
+      <input type="text" [(ngModel)]="value"
+             (click)="searchCity"
+             class="form-control"
+             placeholder="City" />
+    </div>
+  </div>
+  <div class="col-3 pl-0 pr-0">
+    <a class="btn btn-primary" href="#" (click)="searchLocation()">
+      <fa-icon [icon]="searchIcon"></fa-icon>
+    </a>
+  </div>
+</div>
