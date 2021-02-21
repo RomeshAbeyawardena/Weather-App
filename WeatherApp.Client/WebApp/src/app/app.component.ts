@@ -71,6 +71,7 @@ export class AppComponent {
       this.query = newValue;
     }
     const context = this;
+    this.alert.message = "";
     this.hasError = false; 
      this.locationService
        .getLocations(

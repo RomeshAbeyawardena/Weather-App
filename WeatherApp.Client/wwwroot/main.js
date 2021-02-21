@@ -694,6 +694,7 @@ class AppComponent {
             this.query = newValue;
         }
         const context = this;
+        this.alert.message = "";
         this.hasError = false;
         this.locationService
             .getLocations(this.query).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(httpError => {
