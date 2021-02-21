@@ -1,6 +1,8 @@
 import { GeoLocation } from './GeoLocation';
 
 export class LocationItem {
+
+  static default: LocationItem = new LocationItem(0, "", "", GeoLocation.default)
   constructor(
     id: number,
     name: string,

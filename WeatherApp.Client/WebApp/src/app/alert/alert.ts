@@ -1,4 +1,6 @@
 export class Alert {
+  static default: Alert = new Alert("", "",);
+
   constructor(
     type: string,
     message: string) {

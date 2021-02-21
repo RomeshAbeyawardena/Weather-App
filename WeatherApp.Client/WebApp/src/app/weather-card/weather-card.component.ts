@@ -1,6 +1,6 @@
 import { Input, Component, OnInit } from '@angular/core';
 import { WeatherImageService } from '../services/weather-image/weather-image.service';
-import { WeatherCard } from './weathercard';
+import { WeatherCard } from './weather-card';
 import { WeatherData } from '../services/weather-data/weather-data';
 import * as moment from 'moment';
 
@@ -12,9 +12,9 @@ import * as moment from 'moment';
 export class WeatherCardComponent implements OnInit {
 
   constructor(private weatherImageService: WeatherImageService) {
-    this.model = new WeatherCard("NAN", "", 0, "sn", false, false);
+    this.model = WeatherCard.default;
     this.displayTemperature = false;
-    this.weather = new WeatherData("", "", new Date(), 0);
+    this.weather = WeatherData.default;
   }
 
   ngOnInit(): void {

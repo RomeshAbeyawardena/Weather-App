@@ -9,7 +9,7 @@ import { Alert } from './alert';
 export class ErrorAlertComponent implements OnInit {
 
   constructor() {
-    this.model = new Alert("", ""); 
+    this.model = Alert.default; 
   }
 
   ngOnInit(): void {
