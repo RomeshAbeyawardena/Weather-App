@@ -3,6 +3,7 @@ import
 import { Subject, Observable, of } from 'rxjs';
 import { catchError, mergeMap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Alert } from './alert/alert';
+import { Constants } from './constants';
 import { ErrorResponse } from './ErrorResponse';
 import { GeoLocation } from './services/location/GeoLocation';
 import { LocationItem } from './services/location/location-item';
@@ -21,14 +22,15 @@ export class AppComponent {
     private eltRef: ElementRef,
     private locationService: LocationService) {
     const nativeElement = eltRef.nativeElement;
+    const value =  nativeElement.getAttribute('displaytemperature');
+    const apiKey =  nativeElement.getAttribute('key');
+    const baseApiUrl = nativeElement.getAttribute('appdata');
+
     this.getLocation = new Subject<LocationResponse>(); 
-    const baseApiUrl = nativeElement.getAttribute('baseapiurl');
+    
     this.query = nativeElement.getAttribute('query');
     this.totalDays = nativeElement.getAttribute('totaldays');
-    const value =  nativeElement.getAttribute('displaytemperature');
-
-    const apiKey =  nativeElement.getAttribute('key');
-
+    
     this.displayTemperature = value === 'displayTemperature'
     this.alert = new Alert("", "");
     this.searchLocations = new Subject<Array<LocationItem>>();
@@ -36,11 +38,11 @@ export class AppComponent {
     this.location = new LocationItem(0, "", "", new GeoLocation(0, 0));
 
     sessionStorage.setItem(
-      "baseApiUrl",
+      Constants.apiBaseUrl,
       baseApiUrl);
 
     sessionStorage.setItem(
-      "apiKey",
+      Constants.apiKeyName,
       apiKey);
   }
 

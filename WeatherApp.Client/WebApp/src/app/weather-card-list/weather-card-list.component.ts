@@ -16,13 +16,6 @@ export class WeatherCardListComponent implements OnInit {
     this.weatherData = new Array<WeatherData>();
     this.locations = new Subject<Array<LocationItem>>();
 
-    const baseUrl = sessionStorage
-      .getItem("baseApiUrl");
-
-    if (baseUrl === null) {
-      throw "baseUrl not available"
-    }
-
     this.isLoading = true;
     this.totalDays = 0;
     this.displayTemperature = false;

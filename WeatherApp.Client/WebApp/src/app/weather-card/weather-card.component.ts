@@ -3,6 +3,7 @@ import { WeatherImageService } from '../services/weather-image/weather-image.ser
 import { WeatherCard } from './weathercard';
 import { WeatherData } from '../services/weather-data/weather-data';
 import * as moment from 'moment';
+import { Constants } from '../constants';
 
 @Component({
   selector: 'app-weather-card',
@@ -20,9 +21,9 @@ export class WeatherCardComponent implements OnInit {
   ngOnInit(): void {
     const currentDate = moment();
     const forecastDate = moment(this.weather.date);
-    this.model.date = forecastDate.format("DD MMM yyyy");
+    this.model.date = forecastDate.format(Constants.UKDateFormat);
     this.model.isCurrentDayOfWeek = forecastDate.isSame(currentDate, "day"); 
-    this.model.dayOfWeek = forecastDate.format("dddd");
+    this.model.dayOfWeek = forecastDate.format(Constants.DayFormat);
     this.model.iconShortHand = this.weather.stateAbbreviation;
     this.model.temperature = Math.round(this.weather.temperature);
     this.model.displayTemperature = this.displayTemperature;

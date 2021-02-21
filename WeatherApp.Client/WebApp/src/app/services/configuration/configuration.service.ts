@@ -1,5 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Constants } from '../../constants';
 import { ConfigurationData } from './configuration-data';
 
 @Injectable({
@@ -20,10 +21,10 @@ export class ConfigurationService {
   }
   getConfigurationData(): ConfigurationData {
     const baseUrl = sessionStorage.getItem(
-      "baseApiUrl");
+      Constants.apiBaseUrl);
 
     const apiKey = sessionStorage.getItem(
-      "apiKey");
+      Constants.apiKeyName);
 
     if (!baseUrl) {
       throw 'BaseUrl not specified'
