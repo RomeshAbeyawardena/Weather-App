@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { switchMap, catchError, map } from 'rxjs/operators';
 import { Alert } from './alert/alert';
 import { ErrorResponse } from './ErrorResponse';
 import { LocationItem } from './services/location/location-item';
@@ -41,21 +41,30 @@ export class AppComponent {
     
     const context = this;
 
+      this.getLocation
+        .subscribe({ error(error) {
+          console.log(error);
+      }});
+
+
     this.searchLocations = this.getLocation
         .pipe(
           map((locationResponse: LocationResponse) => locationResponse.locations),
           catchError(errorResponse => {
             context.handleError(
               errorResponse.error as ErrorResponse);
-            return new Array(0); }));
-
+            return new Array(0); }))
+    
     this.searchCity();
   }
 
-  handleError(error: ErrorResponse) {
+  handleError(error: ErrorResponse): Array<LocationItem> {
+    console.log(error);
     this.alert.message = error.validationErrors[0];
     this.alert.type = "danger";
     this.hasError = true;
+
+    return new Array(0);
   }
 
   searchCity(newValue?: string) {

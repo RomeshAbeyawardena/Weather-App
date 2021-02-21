@@ -36,8 +36,10 @@ export class WeatherCardListComponent implements OnInit {
     this.locations
       .subscribe({
         next(locations: Array<LocationItem>) {
+          context.isLoading = true;
           context
-            .getWeatherData(locations) }
+            .getWeatherData(locations)
+        }
       });
   }
 

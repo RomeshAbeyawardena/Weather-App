@@ -613,6 +613,10 @@ class AppComponent {
     }
     ngOnInit() {
         const context = this;
+        this.getLocation
+            .subscribe({ error(error) {
+                console.log(error);
+            } });
         this.searchLocations = this.getLocation
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])((locationResponse) => locationResponse.locations), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(errorResponse => {
             context.handleError(errorResponse.error);
@@ -621,9 +625,11 @@ class AppComponent {
         this.searchCity();
     }
     handleError(error) {
+        console.log(error);
         this.alert.message = error.validationErrors[0];
         this.alert.type = "danger";
         this.hasError = true;
+        return new Array(0);
     }
     searchCity(newValue) {
         if (newValue) {
@@ -883,6 +889,7 @@ class WeatherCardListComponent {
         this.locations
             .subscribe({
             next(locations) {
+                context.isLoading = true;
                 context
                     .getWeatherData(locations);
             }

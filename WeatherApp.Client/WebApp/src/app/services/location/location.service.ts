@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { LocationResponse } from './location-response';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { ConfigurationService } from '../configuration/configuration.service';
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
