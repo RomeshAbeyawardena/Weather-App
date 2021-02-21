@@ -12,6 +12,30 @@ module.exports = __webpack_require__(/*! C:\Dev\Root\WeatherApp\WeatherApp.Clien
 
 /***/ }),
 
+/***/ "0TY7":
+/*!*********************************************!*\
+  !*** ./src/app/weather-card/weathercard.ts ***!
+  \*********************************************/
+/*! exports provided: WeatherCard */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WeatherCard", function() { return WeatherCard; });
+class WeatherCard {
+    constructor(dayOfWeek, date, temperature, iconShortHand, isCurrentDayOfWeek, displayTemperature) {
+        this.dayOfWeek = dayOfWeek;
+        this.date = date,
+            this.temperature = temperature;
+        this.iconShortHand = iconShortHand;
+        this.isCurrentDayOfWeek = isCurrentDayOfWeek;
+        this.displayTemperature = displayTemperature;
+    }
+}
+
+
+/***/ }),
+
 /***/ "3c76":
 /*!***************************************************************!*\
   !*** ./src/app/services/weather-data/weather-data.service.ts ***!
@@ -95,7 +119,7 @@ function ErrorAlertComponent_div_0_Template(rf, ctx) { if (rf & 1) {
 } }
 class ErrorAlertComponent {
     constructor() {
-        this.model = _alert__WEBPACK_IMPORTED_MODULE_1__["Alert"].default;
+        this.model = new _alert__WEBPACK_IMPORTED_MODULE_1__["Alert"]("", "");
     }
     ngOnInit() {
     }
@@ -138,7 +162,6 @@ class WeatherData {
         this.temperature = temperature;
     }
 }
-WeatherData.default = new WeatherData("", "", new Date(), 0);
 
 
 /***/ }),
@@ -187,7 +210,6 @@ class GeoLocation {
         this.longitude = longitude;
     }
 }
-GeoLocation.default = new GeoLocation(0, 0);
 
 
 /***/ }),
@@ -247,8 +269,6 @@ LocationService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineI
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LocationItem", function() { return LocationItem; });
-/* harmony import */ var _GeoLocation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GeoLocation */ "Ct58");
-
 class LocationItem {
     constructor(id, name, type, geoLocation) {
         this.id = id;
@@ -257,7 +277,6 @@ class LocationItem {
         this.geoLocation = geoLocation;
     }
 }
-LocationItem.default = new LocationItem(0, "", "", _GeoLocation__WEBPACK_IMPORTED_MODULE_0__["GeoLocation"].default);
 
 
 /***/ }),
@@ -580,7 +599,6 @@ class Alert {
         this.message = message;
     }
 }
-Alert.default = new Alert("", "");
 
 
 /***/ }),
@@ -599,12 +617,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "qCKp");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
 /* harmony import */ var _alert_alert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alert/alert */ "SLR5");
-/* harmony import */ var _services_location_location_item__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./services/location/location-item */ "P7vr");
-/* harmony import */ var _services_location_location_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./services/location/location.service */ "P12i");
-/* harmony import */ var _alert_alert_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./alert/alert.component */ "4hj4");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ "ofXK");
-/* harmony import */ var _location_search_location_search_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./location-search/location-search.component */ "ZftL");
-/* harmony import */ var _weather_card_list_weather_card_list_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./weather-card-list/weather-card-list.component */ "ayS6");
+/* harmony import */ var _services_location_GeoLocation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./services/location/GeoLocation */ "Ct58");
+/* harmony import */ var _services_location_location_item__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./services/location/location-item */ "P7vr");
+/* harmony import */ var _services_location_location_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./services/location/location.service */ "P12i");
+/* harmony import */ var _alert_alert_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./alert/alert.component */ "4hj4");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _location_search_location_search_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./location-search/location-search.component */ "ZftL");
+/* harmony import */ var _weather_card_list_weather_card_list_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./weather-card-list/weather-card-list.component */ "ayS6");
+
 
 
 
@@ -637,10 +657,10 @@ class AppComponent {
         this.totalDays = nativeElement.getAttribute('totaldays');
         const value = nativeElement.getAttribute('displaytemperature');
         this.displayTemperature = value === 'displayTemperature';
-        this.alert = _alert_alert__WEBPACK_IMPORTED_MODULE_3__["Alert"].default;
+        this.alert = new _alert_alert__WEBPACK_IMPORTED_MODULE_3__["Alert"]("", "");
         this.searchLocations = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
         this.hasError = false;
-        this.location = _services_location_location_item__WEBPACK_IMPORTED_MODULE_4__["LocationItem"].default;
+        this.location = new _services_location_location_item__WEBPACK_IMPORTED_MODULE_5__["LocationItem"](0, "", "", new _services_location_GeoLocation__WEBPACK_IMPORTED_MODULE_4__["GeoLocation"](0, 0));
         sessionStorage.setItem("baseApiUrl", this.baseApiUrl);
     }
     ngOnInit() {
@@ -650,7 +670,7 @@ class AppComponent {
         this.alert.message = error.validationErrors[0];
         this.alert.type = "danger";
         this.hasError = true;
-        this.location = _services_location_location_item__WEBPACK_IMPORTED_MODULE_4__["LocationItem"].default;
+        this.location = new _services_location_location_item__WEBPACK_IMPORTED_MODULE_5__["LocationItem"](0, "", "", new _services_location_GeoLocation__WEBPACK_IMPORTED_MODULE_4__["GeoLocation"](0, 0));
         this.getLocation.subscribe();
         return new Array(0);
     }
@@ -676,7 +696,7 @@ class AppComponent {
         this.location = location;
     }
 }
-AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_location_location_service__WEBPACK_IMPORTED_MODULE_5__["LocationService"])); };
+AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_location_location_service__WEBPACK_IMPORTED_MODULE_6__["LocationService"])); };
 AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 9, vars: 7, consts: [[3, "model"], [1, "row"], [1, "col-9"], ["class", "mb-3", 4, "ngIf"], [1, "col-3"], [1, "float-right"], [3, "value", "searchCity"], [3, "displayTemperature", "hasError", "totalDays", "locations", "weatherDataLoaded"], [1, "mb-3"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "app-alert", 0);
@@ -705,7 +725,7 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("value", ctx.query);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("displayTemperature", ctx.displayTemperature)("hasError", ctx.hasError)("totalDays", ctx.totalDays)("locations", ctx.searchLocations);
-    } }, directives: [_alert_alert_component__WEBPACK_IMPORTED_MODULE_6__["ErrorAlertComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgIf"], _location_search_location_search_component__WEBPACK_IMPORTED_MODULE_8__["LocationSearchComponent"], _weather_card_list_weather_card_list_component__WEBPACK_IMPORTED_MODULE_9__["WeatherCardListComponent"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAuY29tcG9uZW50LnNjc3MifQ== */"] });
+    } }, directives: [_alert_alert_component__WEBPACK_IMPORTED_MODULE_7__["ErrorAlertComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_8__["NgIf"], _location_search_location_search_component__WEBPACK_IMPORTED_MODULE_9__["LocationSearchComponent"], _weather_card_list_weather_card_list_component__WEBPACK_IMPORTED_MODULE_10__["WeatherCardListComponent"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAuY29tcG9uZW50LnNjc3MifQ== */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AppComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -713,7 +733,7 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
                 templateUrl: './app.component.html',
                 styleUrls: ['./app.component.scss']
             }]
-    }], function () { return [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"] }, { type: _services_location_location_service__WEBPACK_IMPORTED_MODULE_5__["LocationService"] }]; }, null); })();
+    }], function () { return [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"] }, { type: _services_location_location_service__WEBPACK_IMPORTED_MODULE_6__["LocationService"] }]; }, null); })();
 
 
 /***/ }),
@@ -1044,7 +1064,7 @@ LoaderComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCo
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WeatherCardComponent", function() { return WeatherCardComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _weather_card__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./weather-card */ "uUDC");
+/* harmony import */ var _weathercard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./weathercard */ "0TY7");
 /* harmony import */ var _services_weather_data_weather_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/weather-data/weather-data */ "9Ury");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "wd/R");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
@@ -1071,9 +1091,9 @@ function WeatherCardComponent_div_4_Template(rf, ctx) { if (rf & 1) {
 class WeatherCardComponent {
     constructor(weatherImageService) {
         this.weatherImageService = weatherImageService;
-        this.model = _weather_card__WEBPACK_IMPORTED_MODULE_1__["WeatherCard"].default;
+        this.model = new _weathercard__WEBPACK_IMPORTED_MODULE_1__["WeatherCard"]("NAN", "", 0, "sn", false, false);
         this.displayTemperature = false;
-        this.weather = _services_weather_data_weather_data__WEBPACK_IMPORTED_MODULE_2__["WeatherData"].default;
+        this.weather = new _services_weather_data_weather_data__WEBPACK_IMPORTED_MODULE_2__["WeatherData"]("", "", new Date(), 0);
     }
     ngOnInit() {
         const currentDate = moment__WEBPACK_IMPORTED_MODULE_3__();
@@ -1160,31 +1180,6 @@ ConfigurationService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵde
                 providedIn: 'root'
             }]
     }], function () { return []; }, null); })();
-
-
-/***/ }),
-
-/***/ "uUDC":
-/*!**********************************************!*\
-  !*** ./src/app/weather-card/weather-card.ts ***!
-  \**********************************************/
-/*! exports provided: WeatherCard */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WeatherCard", function() { return WeatherCard; });
-class WeatherCard {
-    constructor(dayOfWeek, date, temperature, iconShortHand, isCurrentDayOfWeek, displayTemperature) {
-        this.dayOfWeek = dayOfWeek;
-        this.date = date,
-            this.temperature = temperature;
-        this.iconShortHand = iconShortHand;
-        this.isCurrentDayOfWeek = isCurrentDayOfWeek;
-        this.displayTemperature = displayTemperature;
-    }
-}
-WeatherCard.default = new WeatherCard("", "", 0, "", false, false);
 
 
 /***/ }),

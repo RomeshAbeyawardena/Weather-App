@@ -28,10 +28,10 @@ export class AppComponent {
     const value =  nativeElement.getAttribute('displaytemperature'); 
     
     this.displayTemperature = value === 'displayTemperature'
-    this.alert = Alert.default;
+    this.alert = new Alert("", "");
     this.searchLocations = new Subject<Array<LocationItem>>();
     this.hasError = false;
-    this.location = LocationItem.default;
+    this.location = new LocationItem(0, "", "", new GeoLocation(0, 0));
     sessionStorage.setItem(
       "baseApiUrl",
       this.baseApiUrl);
@@ -45,7 +45,7 @@ export class AppComponent {
     this.alert.message = error.validationErrors[0];
     this.alert.type = "danger";
     this.hasError = true;
-    this.location = LocationItem.default;
+    this.location = new LocationItem(0, "", "", new GeoLocation(0, 0));
     this.getLocation.subscribe();
     return new Array(0);
   }

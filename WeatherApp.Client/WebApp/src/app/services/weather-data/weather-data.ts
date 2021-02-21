@@ -1,5 +1,4 @@
 export class WeatherData {
-  static default: WeatherData = new WeatherData("", "", new Date(), 0);
   constructor(
     state: string,
     stateAbbreviation: string,

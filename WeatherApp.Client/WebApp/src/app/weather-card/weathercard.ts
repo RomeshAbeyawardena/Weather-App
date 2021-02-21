@@ -1,5 +1,5 @@
 export class WeatherCard {
-  static default:WeatherCard = new WeatherCard("", "", 0, "", false, false);
+
   constructor(
     dayOfWeek: string,
     date: string,
