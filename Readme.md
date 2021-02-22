@@ -16,14 +16,17 @@ or agile from a planning perspective too.
 
 - WeatherApp.Client
   - ASP.NET Web application with an Angular web app tied to controllers 
-  and views. The application uses the builtin Identity provider to authenticate
+  and views. The application uses the built-in Identity provider to authenticate
   users via a dedicated login page. To keep it simple styles were managed using
   Bootstrap 4.6, in order to focus on the development side of a working 
   application.
 - WeatherApp.Server
   - ASP.NET Web application using the Mediatr pattern and feature slice,
   this is the server-side infrastructure that retrieves the weather data
-  and is consumed by the client application.
+  and is consumed by the client application. The API is secured using a
+  X-API-Key so it can only be accessed by trusted applications using custom
+  authentication and authorisation handlers based off the standard authentication
+  handlers.
 - WeatherApp.Shared
   - Shared domain models and constants are housed here to keep things as DRY as 
   possible. Careful consideration was made to ensure classes that are absolutely
