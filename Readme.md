@@ -47,13 +47,13 @@ however the database scripts should be compatible with SQL Server 2017+.
 ### Database Installation
 
 In Visual studio, set up a user secrets file for WeatherApp.Client containing the connection 
-string used by the WeatherApp.Client directory.
-Create the configuration setting in the user secrets directory, replacing the
-connection string with the actual connection string with the database server
-information you intend on using. 
+string used by the WeatherApp.Client application.
+
+Create the following configuration setting in the user secrets json file, replacing the
+connection string with the actual connection string of the database server you intend on using. 
 
 Its recommended the database is blank and the database user
-has full database access to create a database and 
+has full database access to create databases and 
 create/update tables and insert/update data.
  
 `{
