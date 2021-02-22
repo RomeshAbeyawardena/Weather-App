@@ -21,7 +21,7 @@ or agile from a planning perspective too.
   Bootstrap 4.6, in order to focus on the development side of a working 
   application.
 - WeatherApp.Server
-  - ASP.NET Web application using the Mediatr pattern and feature slice,
+  - ASP.NET Web application using the Mediator pattern and feature slice,
   this is the server-side infrastructure that retrieves the weather data
   and is consumed by the client application. The API is secured using a
   X-API-Key so it can only be accessed by trusted applications using custom
