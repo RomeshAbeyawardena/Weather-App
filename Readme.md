@@ -52,7 +52,7 @@ Create the configuration setting in the user secrets directory, replacing the
 connection string with the actual connection string with the database server
 information you intend on using. 
 
-Its recommended the database is blank and
+Its recommended the database is blank and the database user
 has full database access to create a database and 
 create/update tables and insert/update data.
  
@@ -62,7 +62,7 @@ create/update tables and insert/update data.
   }
 }`
    
-In the WeatherApp.Client directory open Powershell and run the follwing command
+In the WeatherApp.Client directory open Powershell and run the following command
 
 `dotnet ef database update`
 
