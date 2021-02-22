@@ -13,6 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherApp.UnitTests", "Wea
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{71E6249D-CC00-409A-81BE-1A60D7C6CF04}"
 	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
 		Start-Angular-build.ps1 = Start-Angular-build.ps1
 		Start-Client.ps1 = Start-Client.ps1
 		Start-Server.ps1 = Start-Server.ps1
