@@ -10,6 +10,7 @@ import { ErrorAlertComponent } from './alert/alert.component';
 import { LocationSearchComponent } from './location-search/location-search.component';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AutocompleteLibComponent } from 'angular-ng-autocomplete';
 
 @NgModule({
   declarations: [
@@ -17,14 +18,15 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     WeatherCardListComponent,
     WeatherCardComponent,
     LoaderComponent,
-    ErrorAlertComponent,
+    ErrorAlertComponent,    
     LocationSearchComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    AutocompleteLibComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

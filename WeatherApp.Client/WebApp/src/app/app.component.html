@@ -17,4 +17,13 @@
                      [hasError]="hasError"
                      [totalDays]="totalDays"
                      [locations]="searchLocations"></app-weather-card-list>
+
+  <div class="form-check">
+    <input id="show-temperature"
+           [(ngModel)]="displayTemperature"
+           class="form-check-input"
+           type="checkbox" />
+    <label for="show-temperature"
+           class="form-check-label">Display Temperature</label>
+  </div>
 </div>

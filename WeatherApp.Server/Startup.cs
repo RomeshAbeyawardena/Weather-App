@@ -6,17 +6,20 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RestSharp;
 using System;
 using System.Linq;
+using WeatherApp.Server.Data;
 using WeatherApp.Server.Features.ApiKey;
 using WeatherApp.Server.Pipelines;
 using WeatherApp.Shared;
 using WeatherApp.Shared.Constants;
 using WeatherApp.Shared.Contracts.Convertors;
 using WeatherApp.Shared.Convertors;
+using WeatherApp.Shared.Extensions;
 
 namespace WeatherApp.Server
 {
@@ -31,6 +34,8 @@ namespace WeatherApp.Server
             var currentAssembly = typeof(Startup).Assembly;
             var sharedAssembly = typeof(Shared.Models.Location).Assembly;
             services
+                .RegisterRepositories<WeatherAppDbContext>(
+                    ConfigureDbContextOptions)
                 .AddHttpContextAccessor()
                 .AddValidatorsFromAssembly(currentAssembly)
                 .AddMediatR(currentAssembly)
@@ -79,6 +84,17 @@ namespace WeatherApp.Server
                     await context.Response.WriteAsync("Weather Server");
                 });
             });
+        }
+
+        private void ConfigureDbContextOptions(
+            IServiceProvider services, 
+            DbContextOptionsBuilder builder)
+        {
+            var applicationSettings = services
+                .GetRequiredService<ApplicationSettings>();
+
+            builder.UseSqlServer(applicationSettings
+                .WeatherAppClientContextConnection);
         }
 
         private void ConfigureAuthentication(

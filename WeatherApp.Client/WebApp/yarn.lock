@@ -1530,6 +1530,11 @@ alphanum-sort@^1.0.0:
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
+angular-ng-autocomplete@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/angular-ng-autocomplete/-/angular-ng-autocomplete-2.0.5.tgz#6284eacb97ed2ef3bf3c9765b564b412217574e0"
+  integrity sha512-mYALrzwc5eoFR5xz/diup5GDsxqXp3L707P4CkiBl5l01fKej0nyIDTQ+xXtZUK3spXIyfuOX0ypa9wTrgCP5A==
+
 ansi-colors@4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/ansi-colors/-/ansi-colors-4.1.1.tgz#cbb9ae256bf750af1eab344f229aa27fe94ba348"

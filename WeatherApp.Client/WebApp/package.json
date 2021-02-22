@@ -24,6 +24,7 @@
     "@fortawesome/fontawesome-free": "^5.15.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
+    "angular-ng-autocomplete": "^2.0.5",
     "bootstrap": "^4.6.0",
     "moment": "^2.29.1",
     "rxjs": "~6.6.0",
