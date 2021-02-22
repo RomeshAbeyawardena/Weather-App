@@ -65,6 +65,24 @@ In the WeatherApp.Client directory open Powershell and run the follwing command
 
 To setup the identity database
 
-## Project Setup
-
 ## Running the App
+
+In the solution directory, open Powershell console and 
+type `./Start-Server.ps1` and hit enter to start up the server application.
+
+Once that is up and running, open anothr Powershell console in the solution directory
+and type `Start-Client.ps1` and hit enter to start up the client application.
+
+Open a browser window and navigate to `https://localhost:5201`, you should be
+redirected to a logon page. I've enabled user registration to make it easier
+for you to setup a user account to test with. Create an user using the register
+link and login using the same credentials to gain access to the weather application.
+ 
+### Additional Notes
+The above Powershell scripts are not signed, you will need to temporarily 
+allow execution of unsigned Powershell scripts using Set-ExecutionPolicy 
+before running the aforementioned scripts.
+
+Further information on this is available on the Microsoft documentation website
+
+[Set-ExecutionPolicy (Microsoft.PowerShell.Security) - PowerShell](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.1)
